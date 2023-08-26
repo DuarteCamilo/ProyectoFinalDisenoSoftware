@@ -1,31 +1,40 @@
 
 package proyectofinaldiseñosoftware;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
  *
- * @author diazje
+ * @author cduar
  */
-public class ConexionDB {
-    
-    private final String base = "base";
-    private final String user = "root";
-    private final String password = "";
+public class ConexionDB{
 
-    private final String url = "jdbc:mariadb://localhost:3306/" + base;
-//    private Connection con = null;
-    
-//    public Connection getConexion() {
-//        try {
-//            Class.forName("org.mariadb.jdbc.Driver");
-//            con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
-//        } catch(SQLException e) {
-//            System.err.println(e);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return con;        
-//    } 
+    private final String url = "jdbc:postgresql://db.nrinrwqwrkcnvuzfebkn.supabase.co:5432/postgres?user=postgres&password=CamiloAndres2302";
+
+    /**
+     * Connect to the PostgreSQL database
+     *
+     * @return a Connection object
+     */
+    public Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+            System.out.println("Genial, estamos en linea");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return conn;
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        ConexionDB app = new ConexionDB();
+        app.connect();
+    }
 }

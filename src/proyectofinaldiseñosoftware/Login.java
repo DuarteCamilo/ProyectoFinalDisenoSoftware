@@ -121,7 +121,7 @@ public class Login extends javax.swing.JFrame {
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Create Account");
         btnIngresar.setBorder(null);
-        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnIngresarMouseEntered(evt);
@@ -208,7 +208,7 @@ public class Login extends javax.swing.JFrame {
         btnIngresar1.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar1.setText("Login");
         btnIngresar1.setBorder(null);
-        btnIngresar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIngresar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnIngresar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnIngresar1MouseEntered(evt);
