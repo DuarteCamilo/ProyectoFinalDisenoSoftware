@@ -1,5 +1,5 @@
 
-package proyectofinaldiseñosoftware;
+package Vistas;
 
 import java.awt.Color;
 import java.awt.Image;

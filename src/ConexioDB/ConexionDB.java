@@ -1,5 +1,5 @@
 
-package proyectofinaldiseñosoftware;
+package ConexioDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
