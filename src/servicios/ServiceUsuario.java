@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ConexioDB;
+package servicios;
 
 import ConexioDB.ConexionDB;
+import ConexioDB.ConexionDB;
+import Modelos.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,6 +37,15 @@ public class ServiceUsuario {
         } catch (SQLException ex) {
             Logger.getLogger(ServiceUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void agregarUsuario ( Usuario usuario ){
+        try{
+            
+        }catch(){
+            
+        }
+        
     }
     
     public static void main(String[] args) {
