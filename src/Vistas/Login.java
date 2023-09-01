@@ -45,12 +45,12 @@ public class Login extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         txtContrasenia = new javax.swing.JTextField();
         cbkMostrar = new javax.swing.JCheckBox();
-        btnIngresar = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         exitBtn = new javax.swing.JPanel();
         lblCerrar = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnIngresar1 = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -116,26 +116,26 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(cbkMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 370, -1, -1));
 
-        btnIngresar.setBackground(new java.awt.Color(127, 85, 57));
-        btnIngresar.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setText("Create Account");
-        btnIngresar.setBorder(null);
-        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnCrear.setBackground(new java.awt.Color(127, 85, 57));
+        btnCrear.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrear.setText("Create Account");
+        btnCrear.setBorder(null);
+        btnCrear.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnCrear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnIngresarMouseEntered(evt);
+                btnCrearMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnIngresarMouseExited(evt);
+                btnCrearMouseExited(evt);
             }
         });
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+                btnCrearActionPerformed(evt);
             }
         });
-        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 520, 130, 40));
+        jPanel1.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 520, 130, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -203,26 +203,26 @@ public class Login extends javax.swing.JFrame {
         jLabel6.setText("You do not have an account? register here");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 460, -1));
 
-        btnIngresar1.setBackground(new java.awt.Color(127, 85, 57));
-        btnIngresar1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        btnIngresar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar1.setText("Login");
-        btnIngresar1.setBorder(null);
-        btnIngresar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnIngresar1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnIngresar.setBackground(new java.awt.Color(127, 85, 57));
+        btnIngresar.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIngresar.setText("Login");
+        btnIngresar.setBorder(null);
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnIngresar1MouseEntered(evt);
+                btnIngresarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnIngresar1MouseExited(evt);
+                btnIngresarMouseExited(evt);
             }
         });
-        btnIngresar1.addActionListener(new java.awt.event.ActionListener() {
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresar1ActionPerformed(evt);
+                btnIngresarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnIngresar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 130, 40));
+        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 130, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 580));
 
@@ -230,20 +230,20 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        VentanaCrearUsuario crearUsuario= new VentanaCrearUsuario();
+        crearUsuario.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnCrearActionPerformed
 
-        if(txtCorreo.getText().isEmpty() || txtContrasenia.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Campos vacios");
-        }
-    }//GEN-LAST:event_btnIngresarActionPerformed
+    private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
+        btnCrear.setBackground(new Color(127, 85, 57));
+    }//GEN-LAST:event_btnCrearMouseExited
 
-    private void btnIngresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseExited
-        btnIngresar.setBackground(new Color(127, 85, 57));
-    }//GEN-LAST:event_btnIngresarMouseExited
-
-    private void btnIngresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseEntered
-        btnIngresar.setBackground(new Color(176, 137, 104));
-    }//GEN-LAST:event_btnIngresarMouseEntered
+    private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
+        btnCrear.setBackground(new Color(176, 137, 104));
+    }//GEN-LAST:event_btnCrearMouseEntered
 
     private void cbkMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbkMostrarActionPerformed
         //       if (cbkMostrar.isSelected()) {
@@ -286,17 +286,20 @@ public class Login extends javax.swing.JFrame {
         yMouse= evt.getY();
     }//GEN-LAST:event_jPanel3MousePressed
 
-    private void btnIngresar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresar1MouseEntered
+    private void btnIngresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnIngresar1MouseEntered
+    }//GEN-LAST:event_btnIngresarMouseEntered
 
-    private void btnIngresar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresar1MouseExited
+    private void btnIngresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnIngresar1MouseExited
+    }//GEN-LAST:event_btnIngresarMouseExited
 
-    private void btnIngresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresar1ActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnIngresar1ActionPerformed
+        if(txtCorreo.getText().isEmpty() || txtContrasenia.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Campos vacios");
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -334,8 +337,8 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnIngresar;
-    private javax.swing.JButton btnIngresar1;
     private javax.swing.JCheckBox cbkMostrar;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel jLabel1;
