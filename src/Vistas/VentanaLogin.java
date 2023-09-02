@@ -7,12 +7,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import Controladores.ControladorLogin;
+import Modelos.Usuario;
 
 /**
  *
  * @author diazje
  */
-public class Login extends javax.swing.JFrame {
+public class VentanaLogin extends javax.swing.JFrame {
+    private ControladorLogin controlador;
     
     int xMouse, yMouse;
 
@@ -20,10 +23,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login() {
+    public VentanaLogin() {
         initComponents();
+        this.controlador = new ControladorLogin();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +46,7 @@ public class Login extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        txtContrasenia = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JTextField();
         cbkMostrar = new javax.swing.JCheckBox();
         btnCrear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -97,14 +100,14 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, -1, -1));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, 260, 10));
 
-        txtContrasenia.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        txtContrasenia.setBorder(null);
-        txtContrasenia.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtContrasena.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        txtContrasena.setBorder(null);
+        txtContrasena.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtContraseniaMousePressed(evt);
+                txtContrasenaMousePressed(evt);
             }
         });
-        jPanel1.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 260, 40));
+        jPanel1.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 260, 40));
 
         cbkMostrar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cbkMostrar.setForeground(new java.awt.Color(127, 85, 57));
@@ -253,9 +256,9 @@ public class Login extends javax.swing.JFrame {
             //        }
     }//GEN-LAST:event_cbkMostrarActionPerformed
 
-    private void txtContraseniaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContraseniaMousePressed
+    private void txtContrasenaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContrasenaMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtContraseniaMousePressed
+    }//GEN-LAST:event_txtContrasenaMousePressed
 
     private void txtCorreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoMousePressed
 
@@ -296,8 +299,32 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-        if(txtCorreo.getText().isEmpty() || txtContrasenia.getText().isEmpty()){
+        if(txtCorreo.getText().isEmpty() || txtContrasena.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Campos vacios");
+            
+        }else{
+            String correo = txtCorreo.getText();
+            String contrasena = txtContrasena.getText();
+            try {
+                Usuario respuesta = controlador.ingresar(correo , contrasena);
+                
+                if (respuesta != null ){
+                    this.dispose();
+                    VentanaUsuario usu = new VentanaUsuario(respuesta);
+                    usu.setVisible(true);
+                    
+                    
+                }else{
+                    
+                }
+                    
+                
+                
+            } catch (Exception e) {
+            }
+            
+            
+            
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -318,20 +345,21 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new VentanaLogin().setVisible(true);
             }
         });
     }
@@ -352,7 +380,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblCerrar;
     private javax.swing.JLabel lblImagen;
-    public javax.swing.JTextField txtContrasenia;
+    public javax.swing.JTextField txtContrasena;
     private javax.swing.JTextField txtCorreo;
     // End of variables declaration//GEN-END:variables
 }

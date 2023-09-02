@@ -4,10 +4,25 @@
  */
 package Controladores;
 
+import Modelos.Usuario;
+import java.sql.SQLException;
+import servicios.ServiceUsuario;
+
 /**
  *
  * @author cduar
  */
 public class ControladorLogin {
+
+    public ControladorLogin() {
+    }
+    
+    public  Usuario ingresar( String correo , String contrasena) throws SQLException{
+        Usuario usuario = ServiceUsuario.getINSTANCE().buscarUsuario(correo , contrasena );
+        
+        return usuario;
+        
+    }
+    
     
 }
