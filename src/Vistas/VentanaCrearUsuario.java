@@ -50,12 +50,9 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         btnIngresar1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
-        jSeparator12 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         txtContrasena = new javax.swing.JTextField();
+        jSeparator6 = new javax.swing.JSeparator();
 
         jSeparator9.setBackground(new java.awt.Color(127, 85, 57));
         jSeparator9.setForeground(new java.awt.Color(127, 85, 57));
@@ -78,7 +75,6 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtNombre.setForeground(new java.awt.Color(127, 85, 57));
         txtNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNombre.setBorder(null);
-        txtNombre.setRequestFocusEnabled(false);
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 120, 20));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 120, 10));
 
@@ -90,7 +86,6 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtApellidos.setForeground(new java.awt.Color(127, 85, 57));
         txtApellidos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtApellidos.setBorder(null);
-        txtApellidos.setRequestFocusEnabled(false);
         jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 120, 20));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 120, 10));
 
@@ -102,7 +97,6 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtId.setForeground(new java.awt.Color(127, 85, 57));
         txtId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtId.setBorder(null);
-        txtId.setRequestFocusEnabled(false);
         jPanel1.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 120, 20));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 120, 10));
 
@@ -114,7 +108,6 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtTelefono.setForeground(new java.awt.Color(127, 85, 57));
         txtTelefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTelefono.setBorder(null);
-        txtTelefono.setRequestFocusEnabled(false);
         jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 120, 20));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 120, 10));
 
@@ -126,7 +119,6 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtCorreo.setForeground(new java.awt.Color(127, 85, 57));
         txtCorreo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCorreo.setBorder(null);
-        txtCorreo.setRequestFocusEnabled(false);
         jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 120, 20));
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 120, 10));
 
@@ -149,7 +141,7 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 50, 30));
+        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 70, 20));
 
         btnIngresar1.setBackground(new java.awt.Color(127, 85, 57));
         btnIngresar1.setFont(new java.awt.Font("Roboto Light", 1, 11)); // NOI18N
@@ -170,7 +162,7 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
                 btnIngresar1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnIngresar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, 100, 30));
+        jPanel1.add(btnIngresar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, 120, 30));
 
         jLabel7.setForeground(new java.awt.Color(127, 85, 57));
         jLabel7.setText("Nombre");
@@ -182,42 +174,18 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         jLabel6.setText("Registrar usuario");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 340, 30));
 
-        jSeparator7.setBackground(new java.awt.Color(127, 85, 57));
-        jSeparator7.setForeground(new java.awt.Color(127, 85, 57));
-        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator7.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, 420));
-
-        jSeparator8.setBackground(new java.awt.Color(127, 85, 57));
-        jSeparator8.setForeground(new java.awt.Color(127, 85, 57));
-        jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator8.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, -1, 350));
-
-        jSeparator10.setBackground(new java.awt.Color(127, 85, 57));
-        jSeparator10.setForeground(new java.awt.Color(127, 85, 57));
-        jSeparator10.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator10.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 420));
-
-        jSeparator12.setBackground(new java.awt.Color(127, 85, 57));
-        jSeparator12.setForeground(new java.awt.Color(127, 85, 57));
-        jSeparator12.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator12.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 350));
-
         jLabel8.setForeground(new java.awt.Color(127, 85, 57));
         jLabel8.setText("Contraseña");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 400, -1, -1));
 
         txtContrasena.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         txtContrasena.setForeground(new java.awt.Color(127, 85, 57));
         txtContrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtContrasena.setBorder(null);
-        txtContrasena.setRequestFocusEnabled(false);
-        jPanel1.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 120, 20));
+        jPanel1.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 120, 20));
+        jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 120, 10));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 540));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 510));
 
         pack();
         setLocationRelativeTo(null);
@@ -325,14 +293,11 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtContrasena;
