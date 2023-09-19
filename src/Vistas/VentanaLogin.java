@@ -255,24 +255,28 @@ public class VentanaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MousePressed
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
-        if(txtCorreo.getText().isEmpty() || txtContrasenia.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Campos vacios");
-            
-        }else{
-            String correo = txtCorreo.getText();
-            String contrasena = txtContrasenia.getText();
-            try {
-                Usuario respuesta = controlador.ingresar(correo , contrasena);
-                
-                if (respuesta != null ){
-                    this.dispose();
-                    VentanaUsuario usu = new VentanaUsuario(respuesta);
-                    usu.setVisible(true);         
-                }else{  
-                }   
-            } catch (Exception e) {
-            }
+        if(txtCorreo.getText().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Ingrese el correo");
+            return;           
         }
+        if( txtContrasenia.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese la contraseña");
+            return;
+        }
+        String correo = txtCorreo.getText();
+        String contrasena = txtContrasenia.getText();
+        try {
+            Usuario respuesta = controlador.ingresar(correo , contrasena);
+
+            if (respuesta != null ){
+                this.dispose();
+                VentanaUsuario usu = new VentanaUsuario(respuesta);
+                usu.setVisible(true);         
+            }else{  
+            }   
+        } catch (Exception e) {
+        }
+        
     }//GEN-LAST:event_btnLoginMouseClicked
 
     private void btnCreateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateMouseEntered

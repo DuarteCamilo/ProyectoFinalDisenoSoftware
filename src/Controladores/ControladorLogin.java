@@ -18,11 +18,9 @@ public class ControladorLogin {
     }
     
     public  Usuario ingresar( String correo , String contrasena) throws SQLException{
-        Usuario usuario = ServiceUsuario.getINSTANCE().buscarUsuario(correo , contrasena );
-        
-        return usuario;
-        
+        Usuario usuario = ServiceUsuario.getINSTANCE().ingresarUsuario(correo , contrasena );
+        return usuario; 
     }
+    }
+
     
-    
-}

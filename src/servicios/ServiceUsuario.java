@@ -34,15 +34,11 @@ public class ServiceUsuario {
     } 
     
     
-    public static Usuario buscarUsuario(String correo , String contrasena ) {
+    public static Usuario ingresarUsuario(String correo , String contrasena ) {
         try {
-            
-            String sql = "SELECT nombre,apellido,id,telefono FROM usuarios WHERE correo=? AND contrasena=? " ;
+            String sql = "SELECT nombre,apellido,id,telefono,contrasena FROM usuarios WHERE correo=? " ;
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, correo );
-            preparedStatement.setString(2, contrasena );
-
-
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
@@ -51,19 +47,54 @@ public class ServiceUsuario {
                 String apellidos = rs.getString("apellido");
                 int id = rs.getInt("id");
                 String telefono = rs.getString("telefono");
-                Usuario usuario = new Usuario(id, nombre, apellidos, telefono, correo, contrasena);
-                return usuario;
+                String contraseniaInterna = rs.getString("contrasena");
                 
-                        
-            }else {
-            JOptionPane.showMessageDialog(null, " La contraseña y correo son  incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                if( contrasena.equals(contraseniaInterna)){
+                    Usuario usuario = new Usuario(id, nombre, apellidos, telefono, correo, contrasena);
+                return usuario;
+                }else{
+                    JOptionPane.showMessageDialog(null, "La contraseña es incorrecta.", "Error", JOptionPane.ERROR_MESSAGE); 
+                }
+                   
+             }else {
+                JOptionPane.showMessageDialog(null, "El usuario con el correo "+ correo +" no esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
-
             
         } catch (SQLException ex) {
             Logger.getLogger(ServiceUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+//        try {
+//            
+//            String sql = "SELECT nombre,apellido,id,telefono FROM usuarios WHERE correo=? AND contrasena=? " ;
+//            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+//            preparedStatement.setString(1, correo );
+//            preparedStatement.setString(2, contrasena );
+//
+//
+//            ResultSet rs = preparedStatement.executeQuery();
+//
+//            if (rs.next()) {
+//
+//                String nombre = rs.getString("nombre");
+//                String apellidos = rs.getString("apellido");
+//                int id = rs.getInt("id");
+//                String telefono = rs.getString("telefono");
+//                Usuario usuario = new Usuario(id, nombre, apellidos, telefono, correo, contrasena);
+//                return usuario;
+//                
+//                        
+//             }else {
+//                JOptionPane.showMessageDialog(null, " La contraseña y correo son  incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+//                return null;
+//            }
+//
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ServiceUsuario.class.getName()).log(Level.SEVERE, null, ex);
+//            System.err.println(ex);
+//        }
         return null;
     }
     
