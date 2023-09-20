@@ -22,9 +22,9 @@ public class ConexionDB{
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
-            System.out.println("Genial, estamos en linea");
+            //System.out.println("Genial, estamos en linea");
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return conn;
