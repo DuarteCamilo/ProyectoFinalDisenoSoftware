@@ -360,7 +360,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
                         String id = tablaCategorias.getValueAt(i, 0).toString();
                         txtId.setText(id);
                         encontrado = true;
-                        limpiarCampos();
+                        //limpiarCampos();
                         break; 
                     }
                 }
@@ -376,7 +376,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
                         String nombre_categoriaA = tablaCategorias.getValueAt(i, 1).toString();
                         txtNombre.setText(nombre_categoriaA);
                         encontrado = true; 
-                        limpiarCampos();
+                        //limpiarCampos();
                         break; 
                     }
                 }
@@ -385,6 +385,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
     }
     
     if (!encontrado) {
+        limpiarCampos();
         JOptionPane.showMessageDialog(rootPane, "No se encontró ninguna coincidencia");
     }
     }//GEN-LAST:event_btnBuscarMouseClicked
