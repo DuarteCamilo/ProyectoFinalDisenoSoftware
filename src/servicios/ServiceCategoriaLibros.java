@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.postgresql.util.PSQLException;
 
 /**
  *
@@ -35,7 +36,7 @@ public class ServiceCategoriaLibros {
     public String obternerCategoria(int id_categoria){
         String categoria = null;
         try {
-            String sql = "SELECT nombre_categoria FROM categorias WHERE id_categoria=?;" ;
+            String sql = "SELECT nombre_categoria FROM categorias_libros WHERE id_categoria=?;" ;
 
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
              preparedStatement.setInt(1, id_categoria);
@@ -48,7 +49,7 @@ public class ServiceCategoriaLibros {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
 
         }
         
@@ -59,8 +60,7 @@ public class ServiceCategoriaLibros {
     public static ArrayList obtenerCategorias(){
         ArrayList<Categoria> listaCategorias = new ArrayList();
         try {
-            String sql = "SELECT id_categoria,nombre_categoria FROM categorias;" ;
-            //System.out.println(sql);
+            String sql = "SELECT id_categoria,nombre_categoria FROM categorias_libros;" ;
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -72,7 +72,7 @@ public class ServiceCategoriaLibros {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 
@@ -82,125 +82,55 @@ public class ServiceCategoriaLibros {
     
     public static void agregarCategoria ( String nombre_categoria  ){
         try {
-            int id_categoria = obtenerNuevoIdCategoria(); // Generar un nuevo id_categoria
-
-            String sql = "INSERT INTO categorias(id_categoria, nombre_categoria) VALUES(?, ?);";
-
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-            preparedStatement.setInt(1, id_categoria);
-            preparedStatement.setString(2, nombre_categoria);
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            JOptionPane.showMessageDialog(null, "Categoría agregada");
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
-    public static int obtenerNuevoIdCategoria() throws SQLException {
-        // Obtener el máximo id_categoria actual en la base de datos
-        String sqlMax = "SELECT MAX(id_categoria) FROM categorias;";
-        PreparedStatement preparedStatementMax = conn.prepareStatement(sqlMax);
-        ResultSet resultSetMax = preparedStatementMax.executeQuery();
-
-        resultSetMax.next();
-        int maxId = resultSetMax.getInt(1);
-
-        resultSetMax.close();
-        preparedStatementMax.close();
-
-        // Comprobar si hay huecos en la secuencia de id_categoria
-        for (int i = 1; i <= maxId; i++) {
-            if (!idCategoriaExiste(i)) {
-                return i; // Devolver el primer id no utilizado encontrado
-            }
-        }
-
-        // Si no se encontraron huecos, devolver el siguiente número después del máximo
-        return maxId + 1;
-    }
-
-    public static boolean idCategoriaExiste(int id_categoria) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM categorias WHERE id_categoria = ?;";
-        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setInt(1, id_categoria);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        resultSet.next();
-        int count = resultSet.getInt(1);
-
-        resultSet.close();
-        preparedStatement.close();
-
-        // Si count es igual a 0, significa que el id_categoria no existe en la base de datos
-        return count > 0;
-    }
-    
-    
-     public static void agregarCategoriaFul ( int id_categoria , String nombre_categoria  ){
-        try{
+            ResultSet rs = buscar_verificar(nombre_categoria);
             
-            
-            String sqlBuscar = "SELECT id_categoria FROM categorias WHERE id_categoria=?";
-            PreparedStatement buscarStmt = conn.prepareStatement(sqlBuscar);
-            buscarStmt.setInt(1, id_categoria);
-            ResultSet resultado = buscarStmt.executeQuery();
-
-            
-            if (resultado.next()) {
-                
-                JOptionPane.showMessageDialog(null, "La categoria con el ID " + id_categoria + " ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                
-                
-
-                try {
-                    String sql = "INSERT INTO categorias(id_categoria,nombre_categoria)" +  "VALUES(?,?);";
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "La categoria con el nombre: " + nombre_categoria + " ya está registrada", "Error", JOptionPane.ERROR_MESSAGE);               
+            }else{
+                try{
+                    String sql = "INSERT INTO categorias_libros( nombre_categoria) VALUES(?);";
 
                     PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-                    preparedStatement.setInt(1, id_categoria);
-                    preparedStatement.setString(2, nombre_categoria);
-
+                    preparedStatement.setString(1, nombre_categoria);
 
                     preparedStatement.executeUpdate();
 
                     preparedStatement.close();
-                    JOptionPane.showMessageDialog(null, "Categoria agregada");
-                    
-                } catch (SQLException ex) {
-                    Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
-
+                    JOptionPane.showMessageDialog(null, "Categoría agregada");
+                } catch (Exception ex) {
+                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-                
-            //}
-                   
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+   
+    
+    public static  ResultSet buscar_verificar (  String nombre_categoria  ){
+        try{
+            String sqlBuscar = "SELECT nombre_categoria FROM categorias_libros WHERE nombre_categoria=?";
+            PreparedStatement buscarStmt = conn.prepareStatement(sqlBuscar);
+            buscarStmt.setString(1, nombre_categoria);
+            ResultSet resultado = buscarStmt.executeQuery();
+            return resultado;         
         }catch( Exception ex){
-            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+            Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        return null;
         
     }
      
-     public static void editarCategoria ( Object[] values ){
+     
+     public static void editarCategoria ( String nombre_categoria , int id_categoria ){
         try{
-       
-            String nombre_categoria = values[1].toString();
-            int id_categoria = Integer.parseInt(values[0].toString());
-            
-
-            String sqlBuscar = "SELECT id_categoria FROM categorias WHERE id_categoria = ?";
-            PreparedStatement buscarUsuarioStmt1 = conn.prepareStatement(sqlBuscar);
-            buscarUsuarioStmt1.setInt(1, id_categoria);
-            ResultSet resultado1 = buscarUsuarioStmt1.executeQuery();
+            ResultSet rs = buscar_verificar(nombre_categoria);
 
                 
-            if(resultado1.next()){
-                String sql = "UPDATE categorias SET nombre_categoria=? WHERE id_categoria=?;";          
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "La categoria con el nombre: " + nombre_categoria + " ya está registrada", "Error", JOptionPane.ERROR_MESSAGE);                  
+            }else {
+                String sql = "UPDATE categorias_libros SET nombre_categoria=? WHERE id_categoria=?;";          
             
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
@@ -214,39 +144,99 @@ public class ServiceCategoriaLibros {
 
                 preparedStatement.close();
                 JOptionPane.showMessageDialog(null, "Datos actualizados");
-            }else {
                 
-                JOptionPane.showMessageDialog(null, "La categoria con el numero de ID " + id_categoria + " no está registrada", "Error", JOptionPane.ERROR_MESSAGE);               
 
             }
                    
         }catch(Exception ex){
-            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      
-     public static  void eliminarCategoria( int id_categoria ){
-        try{
-            
-            
-            String sql = "DELETE from categorias where id_categoria=?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, id_categoria );
-            
-            
-            
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            
-            JOptionPane.showMessageDialog(null, "Categoria eliminada");
-
-            
-            conn.close();
-   
-        }catch(Exception ex){
-            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);  
-        }
-
+     public static  void eliminarCategoriaId( int id_categoria ){
+         
+        try {
+                String sql = "DELETE from categorias_libros where id_categoria=?";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setInt(1, id_categoria);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                JOptionPane.showMessageDialog(null, "Categoria eliminada");
+            } catch (PSQLException ex) {
+                if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
+                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
+                } else {
+                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+            }
+     }
+     
+     
+    public static  void eliminarCategoriaNombre( String nombre_categoria ){
+        try {
+                String sql = "DELETE from categorias_libros where nombre_categoria=?";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, nombre_categoria);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                JOptionPane.showMessageDialog(null, "Categoria eliminada");
+            } catch (PSQLException ex) {
+                if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
+                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
+                } else {
+                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    
     }
+         
+         
+         
+         
+//        if (id_categoria != 0) {
+//            try {
+//                String sql = "DELETE from categorias_libros where id_categoria=?";
+//                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+//                preparedStatement.setInt(1, id_categoria);
+//                preparedStatement.executeUpdate();
+//                preparedStatement.close();
+//                JOptionPane.showMessageDialog(null, "Categoria eliminada");
+//            } catch (PSQLException ex) {
+//                if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
+//                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
+//                    JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
+//                } else {
+//                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            } catch (Exception ex) {
+//                Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } else if (!nombre_categoria.isEmpty()) {
+//            try {
+//                String sql = "DELETE from categorias_libros where nombre_categoria=?";
+//                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+//                preparedStatement.setString(1, nombre_categoria);
+//                preparedStatement.executeUpdate();
+//                preparedStatement.close();
+//                JOptionPane.showMessageDialog(null, "Categoria eliminada");
+//            } catch (PSQLException ex) {
+//                if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
+//                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
+//                    JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
+//                } else {
+//                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            } catch (Exception ex) {
+//                Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+    
+    
 }

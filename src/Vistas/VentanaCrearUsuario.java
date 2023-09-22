@@ -3,6 +3,7 @@ package Vistas;
 
 import Controladores.ControladorVentanaCrearUsuario;
 import Modelos.Usuario;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -72,6 +73,11 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtNombre.setForeground(new java.awt.Color(127, 85, 57));
         txtNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNombre.setBorder(null);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 120, 20));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 120, 10));
 
@@ -83,12 +89,17 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtApellidos.setForeground(new java.awt.Color(127, 85, 57));
         txtApellidos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtApellidos.setBorder(null);
+        txtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 120, 20));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 120, 10));
 
         jLabel3.setForeground(new java.awt.Color(127, 85, 57));
-        jLabel3.setText("Identificación");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, -1, -1));
+        jLabel3.setText("Cedula");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, -1, -1));
 
         txtId.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         txtId.setForeground(new java.awt.Color(127, 85, 57));
@@ -126,6 +137,11 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtCorreo.setForeground(new java.awt.Color(127, 85, 57));
         txtCorreo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCorreo.setBorder(null);
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 120, 20));
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 120, 10));
 
@@ -147,6 +163,11 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         txtContrasena.setForeground(new java.awt.Color(127, 85, 57));
         txtContrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtContrasena.setBorder(null);
+        txtContrasena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContrasenaKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 120, 20));
         jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 120, 10));
 
@@ -190,19 +211,25 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
+        if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo números");
+            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
+        }else if (txtId.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 10 caracteres permitidos");
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
+        if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo números");
+            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
+        }else if (txtTelefono.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 10 caracteres permitidos");
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
@@ -211,18 +238,19 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Complete todos los campos de texto");
         }else{
             try {
-                int id = Integer.parseInt(txtId.getText());
+                int cedula = Integer.parseInt(txtId.getText());
                 String nombre = txtNombre.getText();
                 String apellidos = txtApellidos.getText();
                 String telefono = txtTelefono.getText();
                 String correo = txtCorreo.getText();
                 String contrasena = txtContrasena.getText();           
-                Usuario usuario = new Usuario(id, nombre, apellidos, telefono, correo, contrasena);
-                controlador.crearUsuario(usuario);
-                
-                VentanaUsuario usu = new VentanaUsuario(usuario);
-                usu.setVisible(true);
-                this.dispose();
+                Usuario usuario = new Usuario(cedula, cedula , nombre, apellidos, telefono, correo, contrasena);
+                boolean respuesta = controlador.crearUsuario(usuario);
+                if(respuesta){
+                    VentanaUsuario usu = new VentanaUsuario(usuario);
+                    usu.setVisible(true);
+                    this.dispose();
+                }
             } catch (Exception e) {
             }   
         } 
@@ -233,6 +261,54 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
         JFrame v2 = new VentanaLogin();
         v2.setVisible(true);
     }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c) && c != ' ') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
+        } else if (txtNombre.getText().length() >= 250) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c) && c != ' ') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
+        } else if (txtApellidos.getText().length() >= 250) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
+        }
+    }//GEN-LAST:event_txtApellidosKeyTyped
+
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        char c = evt.getKeyChar();
+        if ( c == ' ') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, " sin espacios"); 
+        } else if (txtCorreo.getText().length() >= 300) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 300 caracteres permitidos");
+        }
+    }//GEN-LAST:event_txtCorreoKeyTyped
+
+    private void txtContrasenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContrasenaKeyTyped
+        char c = evt.getKeyChar();
+        if ( c == ' ') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, " sin espacios"); 
+        } else if (txtContrasena.getText().length() >= 50) {
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 50 caracteres permitidos");
+        }
+    }//GEN-LAST:event_txtContrasenaKeyTyped
 
     
    
