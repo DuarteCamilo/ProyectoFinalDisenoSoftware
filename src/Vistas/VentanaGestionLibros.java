@@ -324,14 +324,18 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, -1, -1));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -360,7 +364,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, -1, -1));
+        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 500, 370));
 
@@ -470,6 +474,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
             Libro libro = controlador.buscarLibro(codigo_libro);
             if (libro != null) {
                 txtCodigo.setText(codigo_libro);
+                txtCodigo.setEditable(false);
                 txtTitulo.setText(libro.getTitulo());
                 txtAutor.setText(libro.getAutor());
                 txtAnioPublicacion.setText(String.valueOf(libro.getAnio_publicacion()));
@@ -488,7 +493,23 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void tablaLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaLibrosMouseClicked
-        // TODO add your handling code here:
+        int row = tablaLibros.getSelectedRow();
+        txtBuscarCodigo.setText(tablaLibros.getValueAt(row,0).toString());
+        txtCodigo.setText(tablaLibros.getValueAt(row,0).toString());
+        txtCodigo.setEditable(false);
+        String codigo_libro = txtCodigo.getText();
+        
+        Libro libro = controlador.buscarLibro(codigo_libro);
+        
+        txtAnioPublicacion.setText(String.valueOf(libro.getAnio_publicacion()));
+        txtCantidadDispo.setText(String.valueOf(libro.getCant_dispo()));
+        txtTitulo.setText(libro.getTitulo());
+        txtAutor.setText(libro.getAutor());
+        int categoria = libro.getCategoria();
+        String categotia_str = tablaLibros.getValueAt(row,3).toString();
+        String completo = categoria +"-"+  categotia_str;
+        cboCategorias.setSelectedItem(completo);
+        
     }//GEN-LAST:event_tablaLibrosMouseClicked
 
     private void txtAnioPublicacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAnioPublicacionKeyTyped
@@ -602,16 +623,10 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
             String nombre_categoria = JOptionPane.showInputDialog(null, "Ingrese el nombre de la nueva categoría");
             if (nombre_categoria != null) {
                 try {
-                    
                     controlador.aniadirCategoria(nombre_categoria);
                     int id_categoria = obtenerIdCategoria(nombre_categoria);
-                    
                     actualizarComboBox();
-
-                    
                     String categoriaFormateada = id_categoria + "-" + nombre_categoria;
-
-                    
                     cboCategorias.setSelectedItem(categoriaFormateada);
 
                 } catch (Exception e) {
@@ -633,7 +648,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo números y letras"); 
@@ -645,7 +660,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
 
     private void txtBuscarCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCodigoKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo números y letras"); 
@@ -656,7 +671,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
 
     private void txtTituloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTituloKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo números y letras"); 
@@ -668,7 +683,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
 
     private void txtAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAutorKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetter(c) && c != ' ') {
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
@@ -784,6 +799,7 @@ public void actualizarComboBox() {
         txtCodigo.setText(t);
         txtTitulo.setText(t);
         cboCategorias.setSelectedItem("-Seleccionar-");
+        txtCodigo.setEditable(true);
         
     }
     

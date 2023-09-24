@@ -5,7 +5,8 @@
         <group>
             <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/servicios/ServiceLibros.java</file>
             <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Vistas/VentanaGestionLibros.java</file>
-            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Controladores/ControladorVentanaGestionLibros.java</file>
+            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/servicios/ServiceCategoriaLibros.java</file>
+            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Vistas/VentanaCrearUsuario.java</file>
             <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Vistas/VentanaGestionCategoria.java</file>
         </group>
     </open-files>

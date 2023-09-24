@@ -82,7 +82,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
                 txtNombreKeyTyped(evt);
             }
         });
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 109, 20));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 109, 20));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 110, 10));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -436,6 +436,11 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void tablaCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCategoriasMouseClicked
+        int row = tablaCategorias.getSelectedRow();
+        txtId.setText(tablaCategorias.getValueAt(row,0).toString());
+        txtNombre.setText(tablaCategorias.getValueAt(row,1).toString());
+        
+        
         
     }//GEN-LAST:event_tablaCategoriasMouseClicked
 
@@ -467,7 +472,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetter(c) ) {
+        if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE ) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 

@@ -45,6 +45,8 @@ public class ServiceCategoriaLibros {
             if (rs.next()) {
                 
                 categoria = rs.getString("nombre_categoria");
+                preparedStatement.close();
+                
                 return categoria;
             }
 
@@ -69,7 +71,9 @@ public class ServiceCategoriaLibros {
                 String nombre_categoria = rs.getString("nombre_categoria");
                 Categoria categoria = new Categoria(id_categoria, nombre_categoria);
                 listaCategorias.add(categoria);
+                
             }
+            preparedStatement.close();
 
         } catch (Exception ex) {
             Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);

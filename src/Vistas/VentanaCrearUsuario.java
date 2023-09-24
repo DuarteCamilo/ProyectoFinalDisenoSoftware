@@ -264,11 +264,11 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetter(c) && c != ' ') {
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
-        } else if (txtNombre.getText().length() >= 250) {
+        } else if (txtNombre.getText().length() >= 250 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
         }
@@ -276,11 +276,11 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
 
     private void txtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetter(c) && c != ' ') {
+        if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
-        } else if (txtApellidos.getText().length() >= 250) {
+        } else if (txtApellidos.getText().length() >= 250 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
             JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
         }
