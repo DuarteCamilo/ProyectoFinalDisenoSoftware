@@ -22,16 +22,22 @@ import javax.swing.JOptionPane;
  * @author cduar
  */
 public class ServiceUsuario {
-    private static ServiceUsuario INSTANCE = new ServiceUsuario();
+    private static ServiceUsuario INSTANCE ;
     
-    private static Connection conn = new ConexionDB().connect();
+    private static Connection conn;
     
-    public ServiceUsuario() {
+    public static ServiceUsuario getINSTANCE() {
+        if(INSTANCE == null){
+            INSTANCE = new ServiceUsuario();
+        }
+        return INSTANCE;
+    }
+    
+    private ServiceUsuario() {
+        conn = ConexionDB.getINSTANCE().getConnection();
     }
 
-    public static ServiceUsuario getINSTANCE() {
-        return INSTANCE;
-    } 
+    
     
     
     public static Usuario ingresarUsuario(String correo , String contrasena ) {

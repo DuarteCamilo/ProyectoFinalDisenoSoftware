@@ -237,7 +237,7 @@ public class VentanaFiltroCategorias extends javax.swing.JFrame {
             
             PreparedStatement ps = null;
             ResultSet rs = null;
-            java.sql.Connection conn = new ConexionDB().connect();
+            java.sql.Connection conn = ConexionDB.getINSTANCE().getConnection();
     
             
             String sql = "SELECT L.codigo_libro, L.titulo, L.autor, C.nombre_categoria, L.anio_publicacion, L.cant_dispo FROM libros AS L INNER JOIN categorias_libros AS C ON L.categoria = C.id_categoria;";                    

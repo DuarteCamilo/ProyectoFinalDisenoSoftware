@@ -502,7 +502,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         try{
             PreparedStatement ps = null;
             ResultSet rs = null;
-            java.sql.Connection conn = new ConexionDB().connect();
+            java.sql.Connection conn = ConexionDB.getINSTANCE().getConnection();
  
             String sql = "SELECT id_categoria,nombre_categoria FROM categorias_libros ";                    
             ps = conn.prepareStatement(sql);

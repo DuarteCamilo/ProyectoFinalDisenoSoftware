@@ -23,14 +23,18 @@ import javax.swing.JOptionPane;
  * @author cduar
  */
 public class ServiceLibros {
-    private static ServiceLibros INSTANCE = new ServiceLibros();
+    private static ServiceLibros INSTANCE;
     
-    private static Connection conn = new ConexionDB().connect();
+    private static Connection conn;
     
-    public ServiceLibros() {
+    private ServiceLibros() {   
+        conn = ConexionDB.getINSTANCE().getConnection();
     }
 
     public static ServiceLibros getINSTANCE() {
+        if(INSTANCE == null){
+            INSTANCE = new ServiceLibros();
+        }
         return INSTANCE;
     }
     

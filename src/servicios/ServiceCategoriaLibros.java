@@ -22,16 +22,22 @@ import org.postgresql.util.PSQLException;
  */
 public class ServiceCategoriaLibros {
     
-    private static ServiceCategoriaLibros  INSTANCE = new ServiceCategoriaLibros ();
+    private static ServiceCategoriaLibros  INSTANCE ;
     
-    private static Connection conn = new ConexionDB().connect();
+    private static Connection conn ;
     
-    public ServiceCategoriaLibros () {
+    private ServiceCategoriaLibros () {
+        conn = ConexionDB.getINSTANCE().getConnection();
+    }
+    
+    public static ServiceCategoriaLibros getINSTANCE() {
+        if(INSTANCE == null){
+            INSTANCE = new ServiceCategoriaLibros();
+        }
+        return INSTANCE;
     }
 
-    public static ServiceCategoriaLibros  getINSTANCE() {
-        return INSTANCE;
-    } 
+     
     
     public String obternerCategoria(int id_categoria){
         String categoria = null;
