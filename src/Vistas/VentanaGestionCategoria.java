@@ -8,12 +8,14 @@ import ConexioDB.ConexionDB;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controladores.ControladorVentanaGestionCategoria;
+import Modelos.Categoria;
 import Modelos.Usuario;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,7 +33,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         this.usuario = usuario;
         this.modelo  = new  DefaultTableModel();
         this.controlador = new ControladorVentanaGestionCategoria();
-        tablaCategorias.setModel(modelo);  
+        modelo=(DefaultTableModel)tablaCategorias.getModel();
         actualizarTabla();
     }
 
@@ -488,9 +490,6 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         txtNombre.setText("");
     }
     public void actualizarTabla(){
-        DefaultTableModel modelo = new  DefaultTableModel();
-        tablaCategorias.setModel(modelo);  
-
         try{
             for (int i = 0; i < 3 ; i++) {
                 for (int j = 0; j < modelo.getRowCount(); j++) {
@@ -500,75 +499,19 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         }catch(NullPointerException e){
         }
         try{
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            java.sql.Connection conn = ConexionDB.getINSTANCE().getConnection();
- 
-            String sql = "SELECT id_categoria,nombre_categoria FROM categorias_libros ";                    
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-
-            
-            ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
-            
-            int cantidadColumnas = rsMd.getColumnCount();
-            
-            modelo.addColumn("Id");
-            modelo.addColumn("Nombre");
-           
-
-            int anchos[] = {100, 100 };
-            for (int i = 0; i < tablaCategorias.getColumnCount(); i++) {
-                tablaCategorias.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);                
+            ArrayList<Categoria> list = controlador.traerCategorias();
+            for (int i = 0; i < list.size(); i++) {
+                Categoria aux = list.get(i);
+                Object[] ob = {aux.getId_categoria() , aux.getNombre_categoria()};
+                modelo.addRow(ob);                  
             }
-            
-            while(rs.next()){
-                Object[] filas = new Object[cantidadColumnas];
-                for (int i = 0; i < cantidadColumnas; i++) {
-                    filas[i] = rs.getObject(i + 1);
-                }
-                modelo.addRow(filas);
-            }
-            
+   
         }catch(SQLException ex){
             System.err.println(ex.toString());
         }
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;

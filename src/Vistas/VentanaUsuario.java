@@ -76,6 +76,12 @@ public class VentanaUsuario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         btnVentanaCategorias = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        btnVentanaPrestamo = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        btnVentanaDevolucion = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        btnVentanaHistorial = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -366,10 +372,10 @@ public class VentanaUsuario extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVentanaCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,7 +386,97 @@ public class VentanaUsuario extends javax.swing.JFrame {
 
         jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 120, 30));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 200, 210));
+        jPanel10.setBackground(new java.awt.Color(127, 85, 57));
+
+        btnVentanaPrestamo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVentanaPrestamo.setForeground(new java.awt.Color(255, 255, 255));
+        btnVentanaPrestamo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnVentanaPrestamo.setText("Prestamo ");
+        btnVentanaPrestamo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentanaPrestamoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVentanaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVentanaPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 120, 30));
+
+        jPanel11.setBackground(new java.awt.Color(127, 85, 57));
+
+        btnVentanaDevolucion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVentanaDevolucion.setForeground(new java.awt.Color(255, 255, 255));
+        btnVentanaDevolucion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnVentanaDevolucion.setText("Devolución");
+        btnVentanaDevolucion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentanaDevolucionMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVentanaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVentanaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 120, 30));
+
+        jPanel12.setBackground(new java.awt.Color(127, 85, 57));
+
+        btnVentanaHistorial.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVentanaHistorial.setForeground(new java.awt.Color(255, 255, 255));
+        btnVentanaHistorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnVentanaHistorial.setText("Historial P&D");
+        btnVentanaHistorial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentanaHistorialMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnVentanaHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVentanaHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel6.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 120, 30));
+
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 200, 320));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -390,7 +486,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -530,41 +626,23 @@ public class VentanaUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtContrasenaKeyTyped
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnVentanaPrestamoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentanaPrestamoMouseClicked
+        VentanaPrestamoLibro x = new VentanaPrestamoLibro(usuario);
+        x.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaPrestamoMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-              
-            }
-        });
-    }
+    private void btnVentanaDevolucionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentanaDevolucionMouseClicked
+        VentanaDevolucionLibro x = new VentanaDevolucionLibro(usuario);
+        x.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaDevolucionMouseClicked
+
+    private void btnVentanaHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentanaHistorialMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVentanaHistorialMouseClicked
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnActualizar;
@@ -572,7 +650,10 @@ public class VentanaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel btnEliminar;
     private javax.swing.JLabel btnGestionarLibros;
     private javax.swing.JLabel btnVentanaCategorias;
+    private javax.swing.JLabel btnVentanaDevolucion;
     private javax.swing.JLabel btnVentanaFiltro;
+    private javax.swing.JLabel btnVentanaHistorial;
+    private javax.swing.JLabel btnVentanaPrestamo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -582,6 +663,9 @@ public class VentanaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

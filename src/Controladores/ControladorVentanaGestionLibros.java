@@ -5,6 +5,7 @@
 package Controladores;
 
 import Modelos.Libro;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import servicios.ServiceCategoriaLibros;
@@ -17,6 +18,11 @@ import servicios.ServiceLibros;
 public class ControladorVentanaGestionLibros {
 
     public ControladorVentanaGestionLibros() {
+    }
+    
+    public ResultSet getRs(){
+        ResultSet rs = servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
+        return rs;
     }
     
     

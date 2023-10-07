@@ -174,7 +174,6 @@ public class ServiceCategoriaLibros {
                 JOptionPane.showMessageDialog(null, "Categoria eliminada");
             } catch (PSQLException ex) {
                 if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
-                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
                     JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
                 } else {
                     Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,6 +185,8 @@ public class ServiceCategoriaLibros {
      
      
     public static  void eliminarCategoriaNombre( String nombre_categoria ){
+        
+        
         try {
                 String sql = "DELETE from categorias_libros where nombre_categoria=?";
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -195,7 +196,6 @@ public class ServiceCategoriaLibros {
                 JOptionPane.showMessageDialog(null, "Categoria eliminada");
             } catch (PSQLException ex) {
                 if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
-                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
                     JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
                 } else {
                     Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,50 +203,5 @@ public class ServiceCategoriaLibros {
             } catch (Exception ex) {
                 Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-    
-    }
-         
-         
-         
-         
-//        if (id_categoria != 0) {
-//            try {
-//                String sql = "DELETE from categorias_libros where id_categoria=?";
-//                PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//                preparedStatement.setInt(1, id_categoria);
-//                preparedStatement.executeUpdate();
-//                preparedStatement.close();
-//                JOptionPane.showMessageDialog(null, "Categoria eliminada");
-//            } catch (PSQLException ex) {
-//                if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
-//                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
-//                    JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
-//                } else {
-//                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            } catch (Exception ex) {
-//                Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else if (!nombre_categoria.isEmpty()) {
-//            try {
-//                String sql = "DELETE from categorias_libros where nombre_categoria=?";
-//                PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//                preparedStatement.setString(1, nombre_categoria);
-//                preparedStatement.executeUpdate();
-//                preparedStatement.close();
-//                JOptionPane.showMessageDialog(null, "Categoria eliminada");
-//            } catch (PSQLException ex) {
-//                if (ex.getMessage().contains("violates foreign key constraint \"libros_categoria_fkey\"")) {
-//                    // Muestra un mensaje personalizado si se viola la restricción de clave foránea
-//                    JOptionPane.showMessageDialog(null, "No se puede eliminar la categoría porque hay libros asignados a esta categoría.");
-//                } else {
-//                    Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            } catch (Exception ex) {
-//                Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-    
-    
+    }   
 }

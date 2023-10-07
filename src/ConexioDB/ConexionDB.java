@@ -24,9 +24,9 @@ public class ConexionDB{
         
         try {
             conn = DriverManager.getConnection(url);
-            //System.out.println("Genial, estamos en linea");
+            System.out.println("Genial, estamos en linea");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getCause());
         }
     }
     public static ConexionDB getINSTANCE() {

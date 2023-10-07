@@ -52,11 +52,8 @@ public class ServiceLibros {
                 int categoria = rs.getInt("categoria");
                 int cant_dispo = rs.getInt("cant_dispo");
                 int anio_publicacion = rs.getInt("anio_publicacion");
-                
                 Libro libro = new Libro(id_libro, codigo_libro, titulo, autor, categoria, anio_publicacion, cant_dispo);
-                return libro;
-
-                
+                return libro;    
             }else{
                 JOptionPane.showMessageDialog(null, "El libro con el codigo " + codigo_libro + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);   
             }
@@ -65,7 +62,6 @@ public class ServiceLibros {
             Logger.getLogger(ServiceLibros.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
-        
     }    
     
     public static ResultSet buscar_verificar(String codigo_libro){
@@ -91,31 +87,21 @@ public class ServiceLibros {
             int categoria = Integer.parseInt(values[3].toString()) ;
             int anio_publicacion = Integer.parseInt(values[4].toString()) ;
             int cant_dispo = Integer.parseInt(values[5].toString()) ;
-            
             ResultSet resultado = buscar_verificar(codigo_libro);
 
             if (resultado.next()) {                
                 JOptionPane.showMessageDialog(null, "El libro con el codigo " + codigo_libro + " ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
-
-            
                 String sql = "INSERT INTO libros(codigo_libro,titulo,autor,categoria,anio_publicacion,cant_dispo)" +  "VALUES(?,?,?,?,?,?);";
-
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-
                 preparedStatement.setString(1, codigo_libro);
                 preparedStatement.setString(2, titulo);
-                
                 preparedStatement.setString(3, autor);
                 preparedStatement.setInt(4, categoria);
                 preparedStatement.setInt(5, anio_publicacion);
                 preparedStatement.setInt(6, cant_dispo);
-               
-
                 preparedStatement.executeUpdate();
-
                 preparedStatement.close();
                 JOptionPane.showMessageDialog(null, "Libro agregado");
                 return true;
@@ -126,9 +112,7 @@ public class ServiceLibros {
         }   
         return false;
     }
-    
-    
-    
+     
     public boolean editarLibro ( Object[] values ){
         try {
             String codigo_libro = values[0].toString();
@@ -137,24 +121,18 @@ public class ServiceLibros {
             int categoria = Integer.parseInt(values[3].toString()) ;
             int anio_publicacion = Integer.parseInt(values[4].toString()) ;
             int cant_dispo = Integer.parseInt(values[5].toString()) ;
-
             ResultSet resultado = buscar_verificar(codigo_libro);
-
+            
             if(resultado.next()){
-
                 String sql = "UPDATE libros set titulo=?,autor=?,categoria=?,anio_publicacion=?,cant_dispo=? where codigo_libro=?;";
-
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
                 preparedStatement.setString(1, titulo);
                 preparedStatement.setString(2, autor);
                 preparedStatement.setInt(3, categoria);
                 preparedStatement.setInt(4, anio_publicacion);
                 preparedStatement.setInt(5, cant_dispo);
                 preparedStatement.setString(6, codigo_libro);
-
                 preparedStatement.executeUpdate();
-
                 preparedStatement.close();
                 JOptionPane.showMessageDialog(null, "Datos actualizados");
                 return true;
@@ -162,8 +140,7 @@ public class ServiceLibros {
             else {
                 JOptionPane.showMessageDialog(null, "El Libro con el codigo " + codigo_libro + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);                 
                 return false;
-            }
-                   
+            }        
         }catch( Exception ex){
             Logger.getLogger(ServiceLibros.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -191,7 +168,7 @@ public class ServiceLibros {
     }
     
     
-        public static ArrayList obtenerProductosFiltro(int categoria){
+    public static ArrayList obtenerLibrosFiltro(int categoria){
         ResultSet rs = null;
         ArrayList<Libro> libros = new ArrayList<>();
         try {
@@ -199,9 +176,6 @@ public class ServiceLibros {
             String sql = "SELECT id_libro,codigo_libro,titulo,autor,anio_publicacion,cant_dispo FROM libros WHERE categoria=? ;" ;
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, categoria );
-            
-
-
             rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -211,10 +185,6 @@ public class ServiceLibros {
                 String autor = rs.getString("autor");
                 int cant_dispo = rs.getInt("cant_dispo");
                 int anio_publicacion = rs.getInt("anio_publicacion");
-                
-                
-                
-                
                 Libro libro = new Libro(id_libro, codigo_libro, titulo, autor, categoria, anio_publicacion, cant_dispo);
                 libros.add(libro);         
            }
@@ -227,33 +197,28 @@ public class ServiceLibros {
         return null;
         
     }
+        
+    public static ArrayList obtenerLibros(){
+        ArrayList<String> listaLibros = new ArrayList();
+        try {
+            String sql = "SELECT codigo_libro FROM libros;" ;
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                String codigo_libro = rs.getString("codigo_libro");
+                listaLibros.add(codigo_libro);  
+            }
+            preparedStatement.close();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceCategoriaLibros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaLibros;     
+    }
     
     
     
     
     
-//        public static ArrayList obtenerLibros(){
-//        ArrayList<Libro> listaLibros = new ArrayList();
-//        try {
-//            String sql = "SELECT id_categoria,nombre_categoria FROM categorias;" ;
-//            //System.out.println(sql);
-//            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//
-//            ResultSet rs = preparedStatement.executeQuery();
-//            while (rs.next()) {
-//                int id_categoria = rs.getInt("id_categoria");
-//                String nombre_categoria = rs.getString("nombre_categoria");
-//                Categoria categoria = new Categoria(id_categoria, nombre_categoria);
-//                listaLibros.add(categoria);
-//            }
-//
-//        } catch (Exception ex) {
-//            Logger.getLogger(ServiceProducto.class.getName()).log(Level.SEVERE, null, ex);
-//
-//        }
-//
-//        return listaLibros;     
-//    }
-   
-    
+
 }
