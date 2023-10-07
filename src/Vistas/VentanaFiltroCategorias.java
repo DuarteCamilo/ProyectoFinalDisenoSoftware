@@ -238,8 +238,7 @@ public class VentanaFiltroCategorias extends javax.swing.JFrame {
             ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
 
             int cantidadColumnas = rsMd.getColumnCount();
-
-
+            
             while(rs.next()){
                 Object[] filas = new Object[cantidadColumnas];
                 for (int i = 0; i < cantidadColumnas; i++) {

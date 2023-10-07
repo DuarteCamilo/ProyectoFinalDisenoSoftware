@@ -481,7 +481,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         } else if (txtNombre.getText().length() >= 100) {
             evt.consume();
 
-            JOptionPane.showMessageDialog(null, "Máximo 100caracteres permitidos");
+            JOptionPane.showMessageDialog(null, "Máximo 100 caracteres permitidos");
         }
                 }//GEN-LAST:event_txtNombreKeyTyped
 

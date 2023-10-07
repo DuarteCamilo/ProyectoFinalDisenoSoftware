@@ -13,34 +13,36 @@ import java.time.LocalDate;
  */
 public class PrestamoLibro {
     private int id_prestamo;
-    private int  cedula; // Sceduuponemos que tienes una clase User para representar usuarios
+    private int  cedula; 
     private String codigo_libro;
-    private LocalDate fechaPrestamo;
-    private LocalDate fechaVencimiento;
-    private LocalDate fechaDevolucion;
-    // Otros atributos y métodos necesarios
+    private LocalDate fecha_prestamo;
+    private LocalDate fecha_vencimiento;
+    private LocalDate fecha_devolucion;
     
-    // Constructor para la solicitud de préstamo
-    public PrestamoLibro( int cedula, String codigo_libro, LocalDate fechaPrestamo, LocalDate fechaVencimiento) {
+    // Constructor para  préstamo
+    public PrestamoLibro( int cedula, String codigo_libro, LocalDate fecha_prestamo, LocalDate fecha_vencimiento) {
         
         this.cedula = cedula;
         this.codigo_libro = codigo_libro;
-        this.fechaPrestamo = fechaPrestamo;
-        this.fechaVencimiento = fechaVencimiento;
+        this.fecha_prestamo = fecha_prestamo;
+        this.fecha_vencimiento = fecha_vencimiento;
     }
-    
-     public PrestamoLibro(int id_prestamo, int cedula, String codigo_libro, LocalDate fechaPrestamo, LocalDate fechaVencimiento) {
+
+    public PrestamoLibro(int id_prestamo, int cedula, String codigo_libro, LocalDate fecha_prestamo, LocalDate fecha_vencimiento, LocalDate fecha_devolucion) {
         this.id_prestamo = id_prestamo;
         this.cedula = cedula;
         this.codigo_libro = codigo_libro;
-        this.fechaPrestamo = fechaPrestamo;
-        this.fechaVencimiento = fechaVencimiento;
+        this.fecha_prestamo = fecha_prestamo;
+        this.fecha_vencimiento = fecha_vencimiento;
+        this.fecha_devolucion = fecha_devolucion;
     }
     
-    // Constructor para registrar la devolución
-    public PrestamoLibro(int id_prestamo, LocalDate fechaDevolucion) {
+    
+    
+    // Constructor para  la devolución
+    public PrestamoLibro(int id_prestamo, LocalDate fecha_devolucion) {
         this.id_prestamo = id_prestamo;
-        this.fechaDevolucion = fechaDevolucion;
+        this.fecha_devolucion = fecha_devolucion;
     }
 
     public int getId_prestamo() {
@@ -67,28 +69,28 @@ public class PrestamoLibro {
         this.codigo_libro = codigo_libro;
     }
 
-    public LocalDate getFechaPrestamo() {
-        return fechaPrestamo;
+    public LocalDate getFecha_prestamo() {
+        return fecha_prestamo;
     }
 
-    public void setFechaPrestamo(LocalDate fechaPrestamo) {
-        this.fechaPrestamo = fechaPrestamo;
+    public void setFecha_prestamo(LocalDate fecha_prestamo) {
+        this.fecha_prestamo = fecha_prestamo;
     }
 
-    public LocalDate getFechaVencimiento() {
-        return fechaVencimiento;
+    public LocalDate getFecha_vencimiento() {
+        return fecha_vencimiento;
     }
 
-    public void setFechaVencimiento(LocalDate fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
+    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
+        this.fecha_vencimiento = fecha_vencimiento;
     }
 
-    public LocalDate getFechaDevolucion() {
-        return fechaDevolucion;
+    public LocalDate getFecha_devolucion() {
+        return fecha_devolucion;
     }
 
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
+    public void setFecha_devolucion(LocalDate fecha_devolucion) {
+        this.fecha_devolucion = fecha_devolucion;
     }
     
     

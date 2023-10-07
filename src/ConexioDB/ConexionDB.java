@@ -24,9 +24,9 @@ public class ConexionDB{
         
         try {
             conn = DriverManager.getConnection(url);
-            System.out.println("Genial, estamos en linea");
+            //System.out.println("Genial, estamos en linea");
         } catch (SQLException e) {
-            System.out.println(e.getCause());
+            //System.out.println(e.getCause());
         }
     }
     public static ConexionDB getINSTANCE() {
@@ -39,11 +39,5 @@ public class ConexionDB{
         return conn;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        ConexionDB app = new ConexionDB();
-        //app.connect();
-    }
+   
 }

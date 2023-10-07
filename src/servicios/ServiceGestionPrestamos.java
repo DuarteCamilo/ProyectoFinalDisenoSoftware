@@ -134,7 +134,7 @@ public class ServiceGestionPrestamos  {
 
     public ArrayList<PrestamoLibro> buscarPrestamosActivosPorUsuario(int cedula ) {
         ArrayList<PrestamoLibro> prestamosActivos = new ArrayList<>();
-        String sql = "SELECT * FROM prestamos WHERE cedula = ? AND fecha_devolucion = ''";
+        String sql = "SELECT * FROM prestamos WHERE cedula = ?  ";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, cedula);
             ResultSet resultSet = statement.executeQuery();
@@ -143,11 +143,24 @@ public class ServiceGestionPrestamos  {
                 String codigo_libro = resultSet.getString("codigo_libro");
                 String fechaPrestamoString = resultSet.getString("fecha_prestamo");
                 String fechaVencimientoString = resultSet.getString("fecha_vencimiento");
-                LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
-                LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
-                PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento);
-                prestamosActivos.add(prestamo);
+                String fechaDevolucionString = resultSet.getString("fecha_devolucion");
+                if(fechaDevolucionString.equals("")){
+                    LocalDate fecha_devolucion = null;
+                    LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
+                    LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
+                    PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento , fecha_devolucion);
+                    prestamosActivos.add(prestamo);
+                    
+                }else{
+                    LocalDate fecha_devolucion = LocalDate.parse(fechaDevolucionString);
+                    LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
+                    LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
+                    PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento , fecha_devolucion);
+                    prestamosActivos.add(prestamo);
+                    
+                }
             }
+            statement.close();
             return prestamosActivos;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,4 +168,6 @@ public class ServiceGestionPrestamos  {
         }
         return prestamosActivos;
     }
+    
+    
 }

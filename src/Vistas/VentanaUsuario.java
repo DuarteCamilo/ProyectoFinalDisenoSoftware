@@ -1,6 +1,8 @@
 
 package Vistas;
 
+
+
 import Modelos.Usuario;
 import javax.swing.JOptionPane;
 import Controladores.ControladorVentanaUsuario;
@@ -639,7 +641,10 @@ public class VentanaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentanaDevolucionMouseClicked
 
     private void btnVentanaHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentanaHistorialMouseClicked
-        // TODO add your handling code here:
+        VentanaHistoriaPyD x = new VentanaHistoriaPyD( usuario);
+        x.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnVentanaHistorialMouseClicked
 
 
