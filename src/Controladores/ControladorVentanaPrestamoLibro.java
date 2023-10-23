@@ -5,9 +5,11 @@
 package Controladores;
 
 import Modelos.Libro;
+import Modelos.PrestamoLibro;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import servicios.*;
 
 /**
@@ -21,23 +23,46 @@ public class ControladorVentanaPrestamoLibro {
     }
     
     public ResultSet getRs(){
-        ResultSet rs = servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
-        return rs;
+        return servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
     }
+
     public  Libro buscarLibro (String codigo_libro){
-        Libro libro = ServiceLibros.getINSTANCE().buscarLibro(codigo_libro);
-        return libro;
+        try {
+            ResultSet rs = ServiceLibros.getINSTANCE().buscar(codigo_libro);
+            
+            if(rs.next()){
+                int id_libro = rs.getInt("id_libro");
+                String titulo = rs.getString("titulo");
+                String autor = rs.getString("autor");
+                int categoria = rs.getInt("categoria");
+                int cant_dispo = rs.getInt("cant_dispo");
+                int anio_publicacion = rs.getInt("anio_publicacion");
+                Libro libro = new Libro(id_libro, codigo_libro, titulo, autor, categoria, anio_publicacion, cant_dispo);
+                return libro;      
+            }else{
+                JOptionPane.showMessageDialog(null, "El Libro con el codigo " + codigo_libro + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);                 
+                return null;
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }  
     }
     
+    
     public ArrayList traerLibros() throws SQLException{
-        ArrayList listaLibros = ServiceLibros.getINSTANCE().obtenerLibros();
-        return listaLibros; 
+        return ServiceLibros.getINSTANCE().getALL();
     }  
     
     
     public boolean registrarPrestamo(int cedula, String codigo_libro, String fecha_prestamo, String fecha_vencimiento){
-        boolean respuesta = ServiceGestionPrestamos.getINSTANCE().registrarPrestamo(cedula, codigo_libro, fecha_prestamo, fecha_vencimiento);
-        return  respuesta;
+        Object[] values = {cedula,codigo_libro,fecha_prestamo,fecha_vencimiento};
+        return ServiceGestionPrestamos.getINSTANCE().agregar(values);
+    }
+    
+    public ArrayList<PrestamoLibro> traerPrestamos(int cedula) {
+        return ServiceGestionPrestamos.getINSTANCE().buscarPrestamosActivosPorUsuario(cedula); 
     }
     
     

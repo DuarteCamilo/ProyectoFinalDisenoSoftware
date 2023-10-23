@@ -4,6 +4,7 @@ import ConexioDB.ConexionDB;
 import Modelos.Usuario;
 import Controladores.ControladorVentanaPrestamoLibro;
 import Modelos.Libro;
+import Modelos.PrestamoLibro;
 import Vistas.VentanaUsuario;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -34,6 +35,7 @@ public class VentanaPrestamoLibro extends javax.swing.JFrame {
         DateChooser.getDateEditor().setEnabled(false);
         actualizarTabla();
         actualizarComboBox();
+        RevisarFechasVencimiento();
 
     }
 
@@ -469,22 +471,32 @@ public class VentanaPrestamoLibro extends javax.swing.JFrame {
     public void actualizarComboBox() {
         cboLibro.removeAllItems();
         try {
-            ArrayList<String> listaLibros = controlador.traerLibros();
-
-//            Collections.sort(lista_str, (a, b) -> {
-//                int idA = Integer.parseInt(a.split("-")[0]);
-//                int idB = Integer.parseInt(b.split("-")[0]);
-//                return Integer.compare(idA, idB);
-//            });
-
+            ArrayList<Libro> listaLibros = controlador.traerLibros();
             cboLibro.addItem("-Seleccionar-");
             for (int i = 0; i < listaLibros.size(); i++) {
-                String item = listaLibros.get(i);
+                String item = listaLibros.get(i).getCodigo_libro();
                 cboLibro.addItem(item);
             }
             
 
         } catch (Exception e) {
+        }
+    }
+    
+    public void RevisarFechasVencimiento(){
+        LocalDate hoy = LocalDate.now();       
+        ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos(usuario.getCedula());
+        int sumaL = 0;
+        for (int i = 0; i < listaPrestamos.size(); i++) {
+            PrestamoLibro prestamo = listaPrestamos.get(i);
+            if(prestamo.getFecha_devolucion() == null  && prestamo.getFecha_vencimiento().isBefore(hoy) ){
+                sumaL ++;
+            }  
+        } 
+        if(sumaL > 0){
+            JOptionPane.showMessageDialog(rootPane, "Nop puede perdir mas libros prestados, tiene: "+ sumaL + " que pasaron su fecha de entrega.");
+            btPrestamo.setEnabled(false);
+            btPrestamo.removeMouseListener(btPrestamo.getMouseListeners()[0]);
         }
     }
     

@@ -67,7 +67,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnCerrarSesion = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -84,6 +84,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
         btnVentanaDevolucion = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         btnVentanaHistorial = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -255,12 +256,12 @@ public class VentanaUsuario extends javax.swing.JFrame {
         jLabel7.setText("Apellidos:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 140, 60, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(127, 85, 57));
-        jLabel4.setText("Datos Personales");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel8.setText("Datos Personales");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 290, 360));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 290, 350));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -478,7 +479,12 @@ public class VentanaUsuario extends javax.swing.JFrame {
 
         jPanel6.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 120, 30));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 200, 320));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 200, 320));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Mas opciones");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -513,7 +519,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
                 String correo = txtCorreo.getText();
                 String contrasena = txtContrasena.getText();
                 
-                Usuario usuario1 = new Usuario( usuario.getId_usuario(),cedula, nombre, apellidos, telefono, correo, contrasena);
+                Usuario usuario1 = new Usuario( cedula, nombre, apellidos, telefono, correo, contrasena);
                 boolean respuesta = controlador.editarUsuario(usuario1);
                 if(respuesta){
                     VentanaUsuario usuarioo = new VentanaUsuario(usuario1);
@@ -666,6 +672,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;

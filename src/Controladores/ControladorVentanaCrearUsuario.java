@@ -16,12 +16,8 @@ public class ControladorVentanaCrearUsuario {
 
     public ControladorVentanaCrearUsuario() {
     }
-    
-    public boolean crearUsuario(Usuario usuario) throws SQLException{
-        Object[] values = {usuario.getNombre(), usuario.getApellidos(), usuario.getCedula(), usuario.getCorreo(), usuario.getTelefono(), usuario.getContrasena()};
-        boolean respuesta = ServiceUsuario.getINSTANCE().agregarUsuario(values);
-        return respuesta;
-        
-    }
-    
+  
+    public boolean crearUsuario(Usuario usuario) {
+        return ServiceUsuario.getINSTANCE().agregar(usuario);
+    }    
 }

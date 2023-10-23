@@ -5,8 +5,9 @@
 package Controladores;
 
 import Modelos.Usuario;
-import java.sql.SQLException;
 import servicios.ServiceUsuario;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,10 +18,10 @@ public class ControladorLogin {
     public ControladorLogin() {
     }
     
-    public  Usuario ingresar( String correo , String contrasena) throws SQLException{
-        Usuario usuario = ServiceUsuario.getINSTANCE().ingresarUsuario(correo , contrasena );
-        return usuario; 
+    public  Usuario ingresar( String correo , String contrasena) {
+        Object[] values = {correo, contrasena};
+        return  ServiceUsuario.getINSTANCE().Ingresar(values);
     }
-    }
+}
 
     

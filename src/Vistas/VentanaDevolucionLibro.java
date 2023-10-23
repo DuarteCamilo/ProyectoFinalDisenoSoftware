@@ -400,9 +400,13 @@ public class VentanaDevolucionLibro extends javax.swing.JFrame {
         try {
             LocalDate fecha_devolucion = LocalDate.now();
             int preestamo_id = Integer.parseInt(selectedItem.toString());
-            controlador.devolucion(preestamo_id, fecha_devolucion.toString());
-            actualizarTabla(usuario.getCedula());
-            actualizarComboBox(usuario.getCedula());
+            boolean respuesta = controlador.devolucion(preestamo_id, fecha_devolucion.toString());
+            if(respuesta){
+                actualizarTabla(usuario.getCedula());
+                actualizarComboBox(usuario.getCedula());
+                
+            }
+            
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btDevolucionMouseClicked

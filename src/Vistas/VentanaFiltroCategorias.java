@@ -3,12 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vistas;
-import ConexioDB.ConexionDB;
 import Controladores.ControladorVentanaFiltroCategorias;
 import Modelos.Categoria;
 import Modelos.Libro;
 import Modelos.Usuario;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -223,7 +221,7 @@ public class VentanaFiltroCategorias extends javax.swing.JFrame {
     }//GEN-LAST:event_cboCategoriasActionPerformed
     
     
-    public void actualizarTabla(){
+     public void actualizarTabla(){
        
         try{
             for (int i = 0; i < 3 ; i++) {
@@ -236,9 +234,7 @@ public class VentanaFiltroCategorias extends javax.swing.JFrame {
         try{
             ResultSet rs = controlador.getRs();
             ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
-
             int cantidadColumnas = rsMd.getColumnCount();
-            
             while(rs.next()){
                 Object[] filas = new Object[cantidadColumnas];
                 for (int i = 0; i < cantidadColumnas; i++) {
@@ -283,16 +279,7 @@ public void actualizarComboBox() {
     }
 
 private void actualizarTablaFiltro(int id_categoria , String nombre_categoria) {
-        DefaultTableModel modelo = new  DefaultTableModel();
-        tablaLibros.setModel(modelo);
-        
-        modelo.addColumn("Codigo");
-        modelo.addColumn("Titulo");
-        modelo.addColumn("Autor");
-        modelo.addColumn("Categoria");
-        modelo.addColumn("Año");
-        modelo.addColumn("Dispoibles");
-        
+       
         try{
             for (int i = 0; i < 3 ; i++) {
                 for (int j = 0; j < modelo.getRowCount(); j++) {

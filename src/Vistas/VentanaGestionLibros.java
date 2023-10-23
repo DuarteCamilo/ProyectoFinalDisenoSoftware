@@ -10,7 +10,7 @@ import Modelos.Categoria;
 import Modelos.Libro;
 import Modelos.Usuario;
 import java.awt.event.KeyEvent;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -482,8 +482,8 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
                 txtAutor.setText(libro.getAutor());
                 txtAnioPublicacion.setText(String.valueOf(libro.getAnio_publicacion()));
                 txtCantidadDispo.setText(String.valueOf(libro.getCant_dispo()));
-
-                String name = controlador.obternerCategoria(libro.getCategoria());
+                Categoria categoria  = (Categoria)controlador.obternerCategoria(libro.getCategoria());
+                String name = categoria.getNombre_categoria();
                 String completo = String.valueOf(libro.getCategoria()) + "-" + name;
                 cboCategorias.setSelectedItem(completo);
             } else {
@@ -625,15 +625,14 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         if (selectedItem != null && selectedItem.toString().equals("Añadir Categoria")) {
             String nombre_categoria = JOptionPane.showInputDialog(null, "Ingrese el nombre de la nueva categoría");
             if (nombre_categoria != null) {
-                try {
-                    controlador.aniadirCategoria(nombre_categoria);
-                    int id_categoria = obtenerIdCategoria(nombre_categoria);
-                    actualizarComboBox();
-                    String categoriaFormateada = id_categoria + "-" + nombre_categoria;
-                    cboCategorias.setSelectedItem(categoriaFormateada);
+                
+                controlador.aniadirCategoria(nombre_categoria);
+                int id_categoria = obtenerIdCategoria(nombre_categoria);
+                actualizarComboBox();
+                String categoriaFormateada = id_categoria + "-" + nombre_categoria;
+                cboCategorias.setSelectedItem(categoriaFormateada);
 
-                } catch (Exception e) {
-                }
+                
 
             }
         }
@@ -708,10 +707,7 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         try{
             ResultSet rs = controlador.getRs();
             ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
-
             int cantidadColumnas = rsMd.getColumnCount();
-
-
             while(rs.next()){
                 Object[] filas = new Object[cantidadColumnas];
                 for (int i = 0; i < cantidadColumnas; i++) {

@@ -4,10 +4,12 @@
  */
 package Controladores;
 
+import Modelos.Categoria;
 import Modelos.Libro;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import servicios.ServiceCategoriaLibros;
 import servicios.ServiceLibros;
 
@@ -21,43 +23,65 @@ public class ControladorVentanaGestionLibros {
     }
     
     public ResultSet getRs(){
-        ResultSet rs = servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
-        return rs;
+        return servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
     }
     
     
     public  Libro buscarLibro (String codigo_libro){
-        Libro libro = ServiceLibros.getINSTANCE().buscarLibro(codigo_libro);
-        return libro;
+        try {
+            ResultSet rs = ServiceLibros.getINSTANCE().buscar(codigo_libro);
+            
+            if(rs.next()){
+                int id_libro = rs.getInt("id_libro");
+                String titulo = rs.getString("titulo");
+                String autor = rs.getString("autor");
+                int categoria = rs.getInt("categoria");
+                int cant_dispo = rs.getInt("cant_dispo");
+                int anio_publicacion = rs.getInt("anio_publicacion");
+                Libro libro = new Libro(id_libro, codigo_libro, titulo, autor, categoria, anio_publicacion, cant_dispo);
+                return libro;      
+            }else{
+                JOptionPane.showMessageDialog(null, "El Libro con el codigo " + codigo_libro + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);                 
+                return null;
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }  
     }
     
     public ArrayList traerCategorias() throws SQLException{
-        ArrayList listaCategorias = ServiceCategoriaLibros.getINSTANCE().obtenerCategorias();
-        return listaCategorias; 
+        return ServiceCategoriaLibros.getINSTANCE().getAll();
     }    
-    public void aniadirCategoria(String nombre_categoria){
-        ServiceCategoriaLibros.getINSTANCE().agregarCategoria(nombre_categoria);  
+    public boolean aniadirCategoria(String nombre_categoria){
+        return ServiceCategoriaLibros.getINSTANCE().agregar(nombre_categoria);         
     }
     
-    public boolean agregarLibro(Libro libro) throws SQLException{
-        Object[] values = {libro.getCodigo_libro(), libro.getTitulo(), libro.getAutor() , libro.getCategoria() ,   libro.getAnio_publicacion() , libro.getCant_dispo() };
-        boolean respuesta = ServiceLibros.getINSTANCE().agregarLibro(values);
-        return respuesta;
+    public boolean agregarLibro(Libro libro) {
+        return  ServiceLibros.getINSTANCE().agregar(libro);
     }
     
-    public boolean editarLibro(Libro libro) throws SQLException{
-        Object[] values = {libro.getCodigo_libro(), libro.getTitulo(), libro.getAutor() , libro.getCategoria() ,   libro.getAnio_publicacion() , libro.getCant_dispo() };
-        boolean resultado = ServiceLibros.getINSTANCE().editarLibro(values);
-        return resultado;
+    public boolean editarLibro(Libro libro) {
+        return ServiceLibros.getINSTANCE().editar(libro);
     }
-    public void eliminarLibro( String codigo_libro) throws SQLException{
-        ServiceLibros.getINSTANCE().eliminarlibro(codigo_libro);
+    public boolean eliminarLibro( String codigo_libro) {
+        return ServiceLibros.getINSTANCE().eliminar(codigo_libro);
     }
     
-    public String obternerCategoria (int id_categoria){
-        String categoria = ServiceCategoriaLibros.getINSTANCE().obternerCategoria(id_categoria);
-        return categoria;
-        
+    public Categoria obternerCategoria ( int id_categoria ){
+        try {
+            ResultSet rs = ServiceCategoriaLibros.getINSTANCE().buscar(id_categoria);
+            if(rs.next()){
+                String nombre_categoria = rs.getString("nombre_categoria");
+                Categoria categoria = new Categoria(id_categoria, nombre_categoria);
+                return categoria ;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        return null;
     }
     
 

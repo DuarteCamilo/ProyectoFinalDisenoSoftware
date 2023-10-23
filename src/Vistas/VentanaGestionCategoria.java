@@ -333,13 +333,11 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Escriba el nombre de una categoria que desea agregar en la base de datos");
             return;
         }
-        try {
-            String nombre_categoria = txtNombre.getText();
-            controlador.aniadirCategoria(nombre_categoria);
-            actualizarTabla();
-            limpiarCampos();
-        } catch (Exception e) {
-        }
+        String nombre_categoria = txtNombre.getText();
+        controlador.aniadirCategoria(nombre_categoria);
+        actualizarTabla();
+        limpiarCampos();
+        
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
@@ -362,7 +360,6 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
                         String id = tablaCategorias.getValueAt(i, 0).toString();
                         txtId.setText(id);
                         encontrado = true;
-                        //limpiarCampos();
                         break; 
                     }
                 }
@@ -377,8 +374,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
                     if (id_categoria.equals(valor.toString())) {
                         String nombre_categoriaA = tablaCategorias.getValueAt(i, 1).toString();
                         txtNombre.setText(nombre_categoriaA);
-                        encontrado = true; 
-                        //limpiarCampos();
+                        encontrado = true;                       
                         break; 
                     }
                 }
@@ -397,44 +393,29 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Complete los campos de texto del id de la categoria y el nombre para modificar correctamente la categoria");
             return;
         }
-        try {
-            int id_categoria = Integer.parseInt(txtId.getText());
-            String nombre_categoria = txtNombre.getText();
-            controlador.editarCategoria(nombre_categoria, id_categoria);
+        
+        int id_categoria = Integer.parseInt(txtId.getText());
+        String nombre_categoria = txtNombre.getText();
+        Categoria categoria = new Categoria(id_categoria, nombre_categoria);
+        boolean respuesta = controlador.editarCategoria(categoria);
+        if(respuesta){
             actualizarTabla();
-            limpiarCampos();
-        } catch (Exception e) {
+            limpiarCampos();   
         }
+  
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        if(txtNombre.getText().isEmpty() && txtId.getText().isEmpty() ){
-            JOptionPane.showMessageDialog(rootPane, "Complete los campos de texto del id de la categoria ó el nombre deben estar completos para eliminar correctamente la categoria");
+        if( txtId.getText().isEmpty() ){
+            JOptionPane.showMessageDialog(rootPane, "Complete los campos de texto del id de la categoria para eliminar correctamente la categoria");
             return;
         }
-        
-        if (!txtId.getText().isEmpty()){
-            try {
-                int id_categoria = Integer.parseInt(txtId.getText());
-                
-                controlador.eliminarCategoriaId( id_categoria);
-                actualizarTabla();
-                limpiarCampos();
-            } catch (Exception e) {
-            }
-            
-        }else if(!txtNombre.getText().isEmpty()){
-            try {
-                String  nombre_categoria = txtNombre.getText();
-                
-                controlador.eliminarCategoriaNombre(nombre_categoria);
-                actualizarTabla();
-                limpiarCampos();
-            } catch (Exception e) {
-            }
-            
-        }
-        
+        int id_categoria = Integer.parseInt(txtId.getText());
+        boolean respuesta = controlador.eliminar( id_categoria);
+        if(respuesta){
+            actualizarTabla();
+            limpiarCampos();
+        }  
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void tablaCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCategoriasMouseClicked

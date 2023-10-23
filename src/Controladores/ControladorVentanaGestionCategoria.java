@@ -8,6 +8,7 @@ import Modelos.Categoria;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import servicios.ServiceCategoriaLibros;
 
 /**
@@ -18,23 +19,20 @@ public class ControladorVentanaGestionCategoria {
 
     public ControladorVentanaGestionCategoria() {
     }
+
+    public boolean aniadirCategoria(String nombre_categoria){
+       return ServiceCategoriaLibros.getINSTANCE().agregar(nombre_categoria);            
+    }
+    public boolean editarCategoria(Categoria categoria){ 
+        return ServiceCategoriaLibros.getINSTANCE().editar( categoria);  
+    }
     
+    public boolean eliminar(int id_categoria) {    
+        return ServiceCategoriaLibros.getINSTANCE().eliminar(id_categoria);              
+    }
     
-    public void aniadirCategoria(String nombre_categoria){
-        ServiceCategoriaLibros.getINSTANCE().agregarCategoria(nombre_categoria);  
-    }
-    public void editarCategoria(String nombre_categoria , int id_categoria) throws SQLException{       
-        ServiceCategoriaLibros.getINSTANCE().editarCategoria(nombre_categoria,id_categoria);
-    }
-    public void eliminarCategoriaId(int id_categoria) throws SQLException{
-        ServiceCategoriaLibros.getINSTANCE().eliminarCategoriaId(id_categoria);
-    }
-    public void eliminarCategoriaNombre(String nombre_categoria ) throws SQLException{
-        ServiceCategoriaLibros.getINSTANCE().eliminarCategoriaNombre( nombre_categoria);
-    }
 
     public ArrayList traerCategorias() throws SQLException{
-        ArrayList listaCategorias = ServiceCategoriaLibros.getINSTANCE().obtenerCategorias();
-        return listaCategorias; 
+        return ServiceCategoriaLibros.getINSTANCE().getAll();
     }  
 }

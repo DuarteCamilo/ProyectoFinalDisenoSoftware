@@ -29,6 +29,15 @@ public class Usuario {
         this.correo = correo;
         this.contrasena = contrasena;
     }
+    
+    public Usuario( int cedula, String nombre, String apellidos, String telefono, String correo, String contrasena) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.contrasena = contrasena;
+    }
 
     public int getId_usuario() {
         return id_usuario;

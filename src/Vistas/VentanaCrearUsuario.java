@@ -244,7 +244,7 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
                 String telefono = txtTelefono.getText();
                 String correo = txtCorreo.getText();
                 String contrasena = txtContrasena.getText();           
-                Usuario usuario = new Usuario(cedula, cedula , nombre, apellidos, telefono, correo, contrasena);
+                Usuario usuario = new Usuario( cedula , nombre, apellidos, telefono, correo, contrasena);
                 boolean respuesta = controlador.crearUsuario(usuario);
                 if(respuesta){
                     VentanaUsuario usu = new VentanaUsuario(usuario);

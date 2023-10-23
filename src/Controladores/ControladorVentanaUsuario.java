@@ -17,14 +17,11 @@ public class ControladorVentanaUsuario {
     public ControladorVentanaUsuario() {
     }
     
-    public boolean editarUsuario(Usuario usuario) throws SQLException{
-        Object[] values = {usuario.getNombre(), usuario.getApellidos(), usuario.getCedula(), usuario.getCorreo(), usuario.getTelefono(), usuario.getContrasena()};
-        boolean respuesta = ServiceUsuario.getINSTANCE().editarUsuario(values);
-        return respuesta;
+    public boolean editarUsuario(Usuario usuario) {
+        return ServiceUsuario.getINSTANCE().editar(usuario);
     }
-    public void eliminar( int id) throws SQLException{
-        ServiceUsuario.getINSTANCE().eliminarUsuario(id);
+    public boolean eliminar( int id) {
+        return ServiceUsuario.getINSTANCE().eliminar(id);
     }
-    
-    
+   
 }

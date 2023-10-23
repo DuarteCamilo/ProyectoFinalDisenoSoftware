@@ -44,9 +44,16 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         btVolver = new javax.swing.JButton();
         cboFiltro = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        cboFiltro2 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tablaHistorial.setBackground(new java.awt.Color(255, 255, 255));
+        tablaHistorial.setForeground(new java.awt.Color(127, 85, 57));
         tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -66,6 +73,8 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaHistorial.setSelectionBackground(new java.awt.Color(127, 85, 57));
+        tablaHistorial.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(tablaHistorial);
         if (tablaHistorial.getColumnModel().getColumnCount() > 0) {
             tablaHistorial.getColumnModel().getColumn(0).setResizable(false);
@@ -79,69 +88,58 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             tablaHistorial.getColumnModel().getColumn(5).setPreferredWidth(50);
         }
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 681, 217));
+
+        btVolver.setBackground(new java.awt.Color(127, 85, 57));
+        btVolver.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btVolver.setForeground(new java.awt.Color(255, 255, 255));
         btVolver.setText("Volver");
+        btVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btVolverActionPerformed(evt);
             }
         });
+        jPanel1.add(btVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
+        cboFiltro.setBackground(new java.awt.Color(127, 85, 57));
+        cboFiltro.setForeground(new java.awt.Color(255, 255, 255));
         cboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccionar-", "En Prestamo", "Entregado" }));
         cboFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboFiltroActionPerformed(evt);
             }
         });
+        jPanel1.add(cboFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, 129, -1));
 
-        jLabel1.setText("Filtrar por:");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel1.setText("Filtro Usuario:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btVolver))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btVolver)
-                .addGap(25, 25, 25))
-        );
+        cboFiltro2.setBackground(new java.awt.Color(127, 85, 57));
+        cboFiltro2.setForeground(new java.awt.Color(255, 255, 255));
+        cboFiltro2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboFiltro2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cboFiltro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 129, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel2.setText("Filtro Estado:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
         );
 
         pack();
@@ -163,6 +161,10 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
           actualizarTablaEntregado(usuario.getCedula());  
         }
     }//GEN-LAST:event_cboFiltroActionPerformed
+
+    private void cboFiltro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltro2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboFiltro2ActionPerformed
 
  
     
@@ -241,7 +243,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
     
     public void boorarTabla(){
         try{
-            for (int i = 0; i < 4 ; i++) {
+            for (int i = 0; i < 5 ; i++) {
                 for (int j = 0; j < modelo.getRowCount(); j++) {
                     modelo.removeRow(j);
                 }
@@ -254,7 +256,9 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btVolver;
     private javax.swing.JComboBox<String> cboFiltro;
+    private javax.swing.JComboBox<String> cboFiltro2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaHistorial;

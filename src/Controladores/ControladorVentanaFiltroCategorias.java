@@ -20,18 +20,13 @@ public class ControladorVentanaFiltroCategorias {
     }
     
     public ResultSet getRs(){
-        ResultSet rs = servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
-        return rs;
+        return servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
     }
     
     public ArrayList traerCategorias() throws SQLException{
-        ArrayList listaCategorias = ServiceCategoriaLibros.getINSTANCE().obtenerCategorias();
-        return listaCategorias; 
+        return ServiceCategoriaLibros.getINSTANCE().getAll();
     }  
-    public ArrayList filtrarLibros(int id_categoria) throws SQLException{
-        ArrayList listaProductos = ServiceLibros.getINSTANCE().obtenerLibrosFiltro(id_categoria);
-        
-        
-        return listaProductos ;
+    public ArrayList filtrarLibros(int id_categoria)throws SQLException {
+        return ServiceLibros.getINSTANCE().obtenerLibrosFiltro(id_categoria);
     }
 }
