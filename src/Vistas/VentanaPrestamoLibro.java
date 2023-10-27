@@ -5,11 +5,13 @@ import Modelos.Usuario;
 import Controladores.ControladorVentanaPrestamoLibro;
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import Modelos.Transaccion;
 import Vistas.VentanaUsuario;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -425,6 +427,13 @@ public class VentanaPrestamoLibro extends javax.swing.JFrame {
             if(respuesta){
                 limpiarCampos();
                 actualizarTabla(); 
+                Libro libro = controlador.buscarLibro(codigo_libro);
+                String accion = "Prestamo Libro";
+                LocalDate fecha = LocalDate.now();
+                LocalTime hora = LocalTime.now();
+                String detalles = "El usuario " + usuario.getCedula() +" pidió en prestamo un(1) Libro de codigo "+ codigo_libro + " "+libro.getTitulo() ;
+                Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+                controlador.agregarTransaccion(transaccion);  
             } 
         }
     }//GEN-LAST:event_btPrestamoMouseClicked

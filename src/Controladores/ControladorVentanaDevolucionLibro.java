@@ -6,8 +6,10 @@ package Controladores;
 
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import Modelos.Transaccion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import servicios.*;
@@ -24,6 +26,9 @@ public class ControladorVentanaDevolucionLibro {
     public ArrayList<PrestamoLibro> traerPrestamos(int cedula) {
         return ServiceGestionPrestamos.getINSTANCE().buscarPrestamosActivosPorUsuario(cedula);
          
+    }
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
     }
 
     public  Libro buscarLibro (String codigo_libro){
@@ -54,4 +59,30 @@ public class ControladorVentanaDevolucionLibro {
         Object[] values = {prestamo_id, fecha_devolucion};
         return ServiceGestionPrestamos.getINSTANCE().editar(values); 
     }
+
+    public PrestamoLibro buscarPrestamo(int id_prestamo) {
+    try {
+        ResultSet rs = ServiceGestionPrestamos.getINSTANCE().buscar(id_prestamo);
+
+        if (rs.next()) {
+            String codigo_libro = rs.getString("codigo_libro");
+            String fechaPrestamoString = rs.getString("fecha_prestamo");
+            String fechaVencimientoString = rs.getString("fecha_vencimiento");
+            String fechaDevolucionString = rs.getString("fecha_devolucion");
+            int cedula = rs.getInt("cedula");          
+            LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
+            LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
+            LocalDate fecha_devolucion = LocalDate.parse(fechaDevolucionString);
+            PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento, fecha_devolucion);
+            return prestamo;
+        } else {
+            JOptionPane.showMessageDialog(null, "El préstamo con el id " + id_prestamo + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return null;
+    }
+}
 }

@@ -6,12 +6,14 @@ package Controladores;
 
 import Modelos.Categoria;
 import Modelos.Libro;
+import Modelos.Transaccion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import servicios.ServiceCategoriaLibros;
 import servicios.ServiceLibros;
+import servicios.ServiceTransacciones;
 
 /**
  *
@@ -24,6 +26,10 @@ public class ControladorVentanaGestionLibros {
     
     public ResultSet getRs(){
         return servicios.ServiceGestionPrestamos.getINSTANCE().getRs();
+    }
+    
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
     }
     
     

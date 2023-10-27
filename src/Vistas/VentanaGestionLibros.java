@@ -8,12 +8,15 @@ import ConexioDB.ConexionDB;
 import Controladores.ControladorVentanaGestionLibros;
 import Modelos.Categoria;
 import Modelos.Libro;
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JOptionPane;
@@ -564,6 +567,12 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
             if(respuesta){
                 limpiarCampos();
                 actualizarTabla();
+                String accion = "Agregar Libro";
+                LocalDate fecha = LocalDate.now();
+                LocalTime hora = LocalTime.now();
+                String detalles = "El usuario " + usuario.getCedula() +" agrego el Libro "+ libro.getTitulo() ;
+                Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+                controlador.agregarTransaccion(transaccion);  
                 
             }
             
@@ -596,7 +605,13 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
             boolean respuesta = controlador.editarLibro(libro);
             if(respuesta){
                 limpiarCampos();
-                actualizarTabla();   
+                actualizarTabla();  
+                String accion = "Editar Libro";
+                LocalDate fecha = LocalDate.now();
+                LocalTime hora = LocalTime.now();
+                String detalles = "El usuario " + usuario.getCedula() +" edito el Libro "+ libro.getTitulo() +" "+ libro.getCodigo_libro() ;
+                Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+                controlador.agregarTransaccion(transaccion);  
             }
             
         }catch(Exception e){
@@ -612,9 +627,19 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         
         try{
             String codigo_libro = txtBuscarCodigo.getText();
-            controlador.eliminarLibro(codigo_libro);
-            limpiarCampos();
-            actualizarTabla();
+            Libro libro = controlador.buscarLibro(codigo_libro);
+            boolean respuesta = controlador.eliminarLibro(codigo_libro);
+            if(respuesta){
+                limpiarCampos();
+                actualizarTabla();
+                String accion = "Eliminar Libro";
+                LocalDate fecha = LocalDate.now();
+                LocalTime hora = LocalTime.now();
+                String detalles = "El usuario " + usuario.getCedula() +" elimino el Libro "+ libro.getTitulo() +" "+ libro.getCodigo_libro() ;
+                Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+                controlador.agregarTransaccion(transaccion);  
+            }
+            
         }catch(Exception e){
             
         }

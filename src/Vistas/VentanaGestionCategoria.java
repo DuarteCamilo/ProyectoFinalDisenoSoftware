@@ -9,12 +9,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controladores.ControladorVentanaGestionCategoria;
 import Modelos.Categoria;
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
@@ -334,9 +337,19 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
             return;
         }
         String nombre_categoria = txtNombre.getText();
-        controlador.aniadirCategoria(nombre_categoria);
-        actualizarTabla();
-        limpiarCampos();
+        boolean respuesta = controlador.aniadirCategoria(nombre_categoria);
+        
+        if(respuesta){
+            actualizarTabla();
+            limpiarCampos();
+            String accion = "Agregar Categoria";
+            LocalDate fecha = LocalDate.now();
+            LocalTime hora = LocalTime.now();
+            String detalles = "El usuario " + usuario.getCedula() +" agrego la categoria "+ nombre_categoria ;
+            Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+            controlador.agregarTransaccion(transaccion);  
+        }
+        
         
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -401,6 +414,12 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         if(respuesta){
             actualizarTabla();
             limpiarCampos();   
+            String accion = "Editar Categoria";
+            LocalDate fecha = LocalDate.now();
+            LocalTime hora = LocalTime.now();
+            String detalles = "El usuario " + usuario.getCedula() +" edito la categoria "+ id_categoria+ " con el nuevo nombre: "+ nombre_categoria ;
+            Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+            controlador.agregarTransaccion(transaccion);  
         }
   
     }//GEN-LAST:event_btnEditarMouseClicked
@@ -415,16 +434,19 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         if(respuesta){
             actualizarTabla();
             limpiarCampos();
+            String accion = "Eliminar Categoria";
+            LocalDate fecha = LocalDate.now();
+            LocalTime hora = LocalTime.now();
+            String detalles = "El usuario " + usuario.getCedula() +" elimino la categoria "+ id_categoria ;
+            Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+            controlador.agregarTransaccion(transaccion);  
         }  
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void tablaCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCategoriasMouseClicked
         int row = tablaCategorias.getSelectedRow();
         txtId.setText(tablaCategorias.getValueAt(row,0).toString());
-        txtNombre.setText(tablaCategorias.getValueAt(row,1).toString());
-        
-        
-        
+        txtNombre.setText(tablaCategorias.getValueAt(row,1).toString()); 
     }//GEN-LAST:event_tablaCategoriasMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked

@@ -220,7 +220,18 @@ public class ServiceGestionPrestamos  implements DAO{
 
     @Override
     public ResultSet buscar(Object insertion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            int prestamo_id = (int)insertion;
+            sql = "SELECT * FROM prestamos WHERE prestamo_id = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, prestamo_id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        return null;
     }
     
     

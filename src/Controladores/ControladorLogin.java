@@ -4,10 +4,11 @@
  */
 package Controladores;
 
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import servicios.ServiceUsuario;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import servicios.ServiceTransacciones;
+
 
 /**
  *
@@ -21,6 +22,10 @@ public class ControladorLogin {
     public  Usuario ingresar( String correo , String contrasena) {
         Object[] values = {correo, contrasena};
         return  ServiceUsuario.getINSTANCE().Ingresar(values);
+    }
+
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
     }
 }
 

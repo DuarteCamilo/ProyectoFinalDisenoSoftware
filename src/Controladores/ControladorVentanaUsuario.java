@@ -4,8 +4,10 @@
  */
 package Controladores;
 
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.sql.SQLException;
+import servicios.ServiceTransacciones;
 import servicios.ServiceUsuario;
 
 /**
@@ -15,6 +17,10 @@ import servicios.ServiceUsuario;
 public class ControladorVentanaUsuario {
 
     public ControladorVentanaUsuario() {
+    }
+    
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
     }
     
     public boolean editarUsuario(Usuario usuario) {

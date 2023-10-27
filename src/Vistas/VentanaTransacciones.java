@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vistas;
+import Controladores.ControladorTransacciones;
 import Modelos.Usuario;
-import Controladores.ControladorVentanaHistoriaPyD;
 import Modelos.Categoria;
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
@@ -19,19 +19,19 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author cduar
  */
-public class VentanaHistoriaPyD extends javax.swing.JFrame {
+public class VentanaTransacciones extends javax.swing.JFrame {
     private Usuario usuario;
-    private ControladorVentanaHistoriaPyD controlador;
+    private ControladorTransacciones controlador;
     DefaultTableModel modelo;
     /**
      * Creates new form VentanaHistoriaPyD
      */
-    public VentanaHistoriaPyD(Usuario usuario) {
+    public VentanaTransacciones(Usuario usuario) {
         initComponents();
         this.usuario = usuario;
-        this.controlador = new ControladorVentanaHistoriaPyD();
+        this.controlador = new ControladorTransacciones();
         modelo=(DefaultTableModel)tablaHistorial.getModel();
-        actualizarTabla(usuario.getCedula());
+        actualizarTablaId(usuario.getCedula());
         txtid.setEditable(false);
         txtid.setText(String.valueOf(usuario.getCedula()));
         btBuscar.setEnabled(false);
@@ -68,17 +68,17 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         tablaHistorial.setForeground(new java.awt.Color(127, 85, 57));
         tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre Usuario", "Cedula", "Nombre del Libro", "Categoria", "Fecha Prestamo", "Fecha Vencimiento", "Fecha Devolución"
+                "Accion", "Id Usuario", "Fecha", "Hora", "Detalles"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -94,14 +94,11 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             tablaHistorial.getColumnModel().getColumn(1).setResizable(false);
             tablaHistorial.getColumnModel().getColumn(1).setPreferredWidth(30);
             tablaHistorial.getColumnModel().getColumn(2).setResizable(false);
+            tablaHistorial.getColumnModel().getColumn(2).setPreferredWidth(20);
             tablaHistorial.getColumnModel().getColumn(3).setResizable(false);
-            tablaHistorial.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tablaHistorial.getColumnModel().getColumn(3).setPreferredWidth(20);
             tablaHistorial.getColumnModel().getColumn(4).setResizable(false);
-            tablaHistorial.getColumnModel().getColumn(4).setPreferredWidth(50);
-            tablaHistorial.getColumnModel().getColumn(5).setResizable(false);
-            tablaHistorial.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tablaHistorial.getColumnModel().getColumn(6).setResizable(false);
-            tablaHistorial.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tablaHistorial.getColumnModel().getColumn(4).setPreferredWidth(260);
         }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 710, 300));
@@ -120,7 +117,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
 
         cboFiltro.setBackground(new java.awt.Color(127, 85, 57));
         cboFiltro.setForeground(new java.awt.Color(255, 255, 255));
-        cboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccionar-", "En Prestamo", "Entregado", "Vencimiento" }));
+        cboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccionar-", "Crear Usuario", "Inicio Sesión", "Cerrar Sesión", "Prestamo Libro", "Devolucion Libro", "Editar Usuario", "Agregar Libro", "Editar Libro", "Eliminar Libro", "Agregar Categoria", "Editar Categoria", "Eliminar Categoria", "Generar Reporte" }));
         cboFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboFiltroActionPerformed(evt);
@@ -220,42 +217,137 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 }else if(Integer.parseInt(txtid.getText()) <= 0 ){
                     actualizarTablaGeneral();
                 }else{
-                    actualizarTabla(Integer.parseInt(txtid.getText()));
-                }   break;
-            case "En Prestamo":
+                    actualizarTablaId(Integer.parseInt(txtid.getText()));
+                }   
+                break;
+            case "Crear Usuario":
                 if( txtid.getText().equals("")){
-                    actualizarTablaEnPrestamoGeneral();
+                    actualizarTablaAccion(selectedItem.toString());
                 }else if(Integer.parseInt(txtid.getText()) <= 0 ){
-                    actualizarTablaEnPrestamoGeneral();
+                    actualizarTablaGeneral();
                 }else{
-                    actualizarTablaEnPrestamo(Integer.parseInt(txtid.getText()));
-                }   break;
-            case "Entregado":
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                } 
+                break;
+            case "Inicio Sesión":
                 if( txtid.getText().equals("")){
-                    actualizarTablaEntregadoGenral();
+                    actualizarTablaAccion(selectedItem.toString());
                 }else if(Integer.parseInt(txtid.getText()) <= 0 ){
-                    actualizarTablaEntregadoGenral();
+                    actualizarTablaGeneral();
                 }else{
-                    actualizarTablaEntregado(Integer.parseInt(txtid.getText()));
-                }   break;
-            case "Vencimiento":
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                 
+                break;
+            case "Cerrar Sesión":
                 if( txtid.getText().equals("")){
-                    actualizarTablaVencimientoGenral();
+                    actualizarTablaAccion(selectedItem.toString());
                 }else if(Integer.parseInt(txtid.getText()) <= 0 ){
-                    actualizarTablaVencimientoGenral();
+                    actualizarTablaGeneral();
                 }else{
-                    actualizarTablaVencimiento(Integer.parseInt(txtid.getText()));
-                }   break;
-            default:   
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                 
+                break;
+            case "Prestamo Libro":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Devolucion Libro":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Editar Usuario":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Agregar Libro":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Editar Libro":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Eliminar Libro":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Agregar Categoria":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Editar Categoria":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Eliminar Categoria":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            case "Generar Reporte":
+                if( txtid.getText().equals("")){
+                    actualizarTablaAccion(selectedItem.toString());
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTablaAccionAndId(selectedItem.toString() ,Integer.parseInt(txtid.getText()));
+                }                      
+                break;
+            default:
                 break;
         }
+
         
     }//GEN-LAST:event_cboFiltroActionPerformed
 
     private void cboFiltro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltro2ActionPerformed
         Object selectedItem = cboFiltro2.getSelectedItem();
         if(selectedItem.toString().equals("Personal")){
-            actualizarTabla(usuario.getCedula());
+            actualizarTablaId(usuario.getCedula());
             txtid.setText(String.valueOf(usuario.getCedula()));
         }else if(selectedItem.toString().equals("General")){
             actualizarTablaGeneral();
@@ -279,7 +371,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             int cedula = Integer.parseInt(txtid.getText());
             Usuario usuario1 = controlador.buscarUsu(cedula);
             if (usuario1 != null) {
-                actualizarTabla(cedula);    
+                actualizarTablaId(cedula);    
             } else {
                 JOptionPane.showMessageDialog(null, "El usuario con el número de cédula: " + cedula + " no está registrado");
                 txtid.setText("");
@@ -323,7 +415,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         String accion = "Generar Reporte";
         LocalDate fecha = LocalDate.now();
         LocalTime hora = LocalTime.now();
-        String detalles = "El usuario " + usuario.getCedula() +" genero un reporte de prestamos de libros " ;
+        String detalles = "El usuario " + usuario.getCedula() +" genero un reporte de transacciones del sistema" ;
         Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
         controlador.agregarTransaccion(transaccion);  
     
@@ -331,32 +423,15 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
 
  
     
-    public void actualizarTabla(int cedula){
+    public void actualizarTablaAccion(String accion){
         boorarTabla();
-        LocalDate hoy = LocalDate.now();
         try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                LocalDate x = aux.getFecha_devolucion();
-                LocalDate y = aux.getFecha_vencimiento();
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(cedula);
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                if(x == null && y.isAfter(hoy)){
-                    String fecha_devolucion = "En prestamo";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);
-                    
-                }else if(x == null && y.isBefore(hoy)){
-                    String fecha_devolucion = "Retrasado";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);
-                    
-                }else{
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), cedula ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
-                    modelo.addRow(ob);
-                    
+            ArrayList<Transaccion> listaTransacciones = controlador.traerTransacciones();
+            for (int i = 0; i < listaTransacciones.size(); i++) {
+                Transaccion aux = listaTransacciones.get(i);
+                if(aux.getAccion().equals(accion)){
+                    Object[] ob = { aux.getAccion(), aux.getId_usuario() ,  aux.getFecha(),aux.getHora(), aux.getDetalles()};
+                    modelo.addRow(ob);   
                 }
             }
 
@@ -365,21 +440,33 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             }
     }
     
-    public void actualizarTablaEnPrestamo(int cedula){
+    public void actualizarTablaAccionAndId(String accion , int cedula){
         boorarTabla();
         try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
+            ArrayList<Transaccion> listaTransacciones = controlador.traerTransacciones();            
+            for (int i = 0; i < listaTransacciones.size(); i++) {
+                Transaccion aux = listaTransacciones.get(i);
+                if(aux.getAccion().equals(accion) && aux.getId_usuario() == cedula){
+                    Object[] ob = { aux.getAccion(), aux.getId_usuario() ,  aux.getFecha(),aux.getHora(), aux.getDetalles()};
+                    modelo.addRow(ob);   
+                }
                 
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(cedula);
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                if(aux.getFecha_devolucion() == null){
-                    
-                    String fecha_devolucion = "En prestamo";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);
+            }
+
+            }catch(Exception ex){
+                System.err.println(ex.toString());
+            }
+    }
+    
+    public void actualizarTablaId(int cedula){
+        boorarTabla();
+        try{
+            ArrayList<Transaccion> listaTransacciones = controlador.traerTransacciones();
+            for (int i = 0; i < listaTransacciones.size(); i++) {
+                Transaccion aux = listaTransacciones.get(i);
+                if( aux.getId_usuario() == cedula){
+                    Object[] ob = { aux.getAccion(), aux.getId_usuario() ,  aux.getFecha(),aux.getHora(), aux.getDetalles()};
+                    modelo.addRow(ob);   
                 }
             }
 
@@ -388,75 +475,21 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             }
     }
     
-    public void actualizarTablaEnPrestamoGeneral(){
-        boorarTabla();
-        LocalDate hoy = LocalDate.now();
-        try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(aux.getCedula());
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                LocalDate y = aux.getFecha_vencimiento();
-                
-                if(aux.getFecha_devolucion() == null && y.isAfter(hoy) ){
-                    
-                    String fecha_devolucion = "En prestamo";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);
-                }
-            }
-
-            }catch(Exception ex){
-                System.err.println(ex.toString());
-            }
-    }
-    public void actualizarTablaEntregado(int cedula){
-       
-        boorarTabla();
-        try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(aux.getCedula());
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                if(aux.getFecha_devolucion() != null){ 
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), cedula ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
-                    modelo.addRow(ob);
-                    
-                }
-            }
-
-            }catch(Exception ex){
-                System.err.println(ex.toString());
-            }
-    }
     
-    public void actualizarTablaEntregadoGenral(){
-       
+    public void actualizarTablaGeneral(){
         boorarTabla();
         try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(aux.getCedula());
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                
-                if(aux.getFecha_devolucion() != null){ 
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), aux.getCedula() ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
+            ArrayList<Transaccion> listaTransacciones = controlador.traerTransacciones();
+            for (int i = 0; i < listaTransacciones.size(); i++) {
+                Transaccion aux = listaTransacciones.get(i);
+                Object[] ob = { aux.getAccion(), aux.getId_usuario() ,  aux.getFecha(),aux.getHora(), aux.getDetalles()};
                     modelo.addRow(ob);
-                    
-                }
             }
 
             }catch(Exception ex){
                 System.err.println(ex.toString());
             }
     }
-    
     public void boorarTabla(){
         try{
             for (int i = 0; i < 5 ; i++) {
@@ -469,91 +502,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         
     }
     
-    public void actualizarTablaGeneral(){
-       LocalDate hoy = LocalDate.now();
-        boorarTabla();
-        try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                LocalDate x = aux.getFecha_devolucion();
-                LocalDate y = aux.getFecha_vencimiento();
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(aux.getCedula());
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                
-                if(x == null &&  y.isAfter(hoy) ){
-                    String fecha_devolucion = "En prestamo";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);
-                    
-                }else if(x == null && y.isBefore(hoy)){
-                    String fecha_devolucion = "Retrasado";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);
-                    
-                }else{
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), aux.getCedula() ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
-                    modelo.addRow(ob);
-                    
-                }
-            }
-
-            }catch(Exception ex){
-                System.err.println(ex.toString());
-            }
-    }
-    
-    
-    private void actualizarTablaVencimientoGenral() {
-        boorarTabla();
-        LocalDate hoy = LocalDate.now();
-        try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                LocalDate x = aux.getFecha_devolucion();
-                LocalDate y = aux.getFecha_vencimiento();
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(aux.getCedula());
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                
-                if(x == null && y.isBefore(hoy)){
-                    String fecha_devolucion = "Retrasado";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);                   
-                }
-            }
-
-            }catch(Exception ex){
-                System.err.println(ex.toString());
-            }
-    }
-
-    private void actualizarTablaVencimiento(int cedula) {
-        boorarTabla();
-        LocalDate hoy = LocalDate.now();
-        try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
-            for (int i = 0; i < listaPrestamos.size(); i++) {
-                PrestamoLibro aux = listaPrestamos.get(i);
-                LocalDate y = aux.getFecha_vencimiento();
-                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                Usuario usu = controlador.buscarUsu(cedula);
-                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
-                
-                if(aux.getFecha_devolucion() == null && y.isBefore(hoy)){
-                    String fecha_devolucion = "Retrasado";
-                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,  cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
-                    modelo.addRow(ob);                   
-                }
-            }
-
-            }catch(Exception ex){
-                System.err.println(ex.toString());
-            }
-    }
-    
+ 
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

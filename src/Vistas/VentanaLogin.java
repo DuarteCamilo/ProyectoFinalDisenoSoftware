@@ -8,7 +8,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import Controladores.ControladorLogin;
+import Modelos.Transaccion;
 import Modelos.Usuario;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 
 /**
@@ -271,7 +275,14 @@ public class VentanaLogin extends javax.swing.JFrame {
             if (respuesta != null ){
                 this.dispose();
                 VentanaUsuario usu = new VentanaUsuario(respuesta);
-                usu.setVisible(true);         
+                usu.setVisible(true);
+                String accion = "Inicio Sesión";
+                LocalDate fecha = LocalDate.now();
+                LocalTime hora = LocalTime.now();
+                String detalles = "El usuario incio sesion";
+                int id_usuario = respuesta.getCedula();
+                Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, id_usuario);               
+                controlador.agregarTransaccion(transaccion);
             }else{  
             }   
         } catch (Exception e) {

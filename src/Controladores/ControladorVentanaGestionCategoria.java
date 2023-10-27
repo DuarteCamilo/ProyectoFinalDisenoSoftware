@@ -5,11 +5,13 @@
 package Controladores;
 
 import Modelos.Categoria;
+import Modelos.Transaccion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import servicios.ServiceCategoriaLibros;
+import servicios.ServiceTransacciones;
 
 /**
  *
@@ -20,6 +22,10 @@ public class ControladorVentanaGestionCategoria {
     public ControladorVentanaGestionCategoria() {
     }
 
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
+    }
+    
     public boolean aniadirCategoria(String nombre_categoria){
        return ServiceCategoriaLibros.getINSTANCE().agregar(nombre_categoria);            
     }

@@ -2,8 +2,11 @@
 package Vistas;
 
 import Controladores.ControladorVentanaCrearUsuario;
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -250,6 +253,12 @@ public class VentanaCrearUsuario extends javax.swing.JFrame {
                     VentanaUsuario usu = new VentanaUsuario(usuario);
                     usu.setVisible(true);
                     this.dispose();
+                    String accion = "Crear Usuario";
+                    LocalDate fecha = LocalDate.now();
+                    LocalTime hora = LocalTime.now();
+                    String detalles = "Se creo la cuenta del usuario " + usuario.getCedula();
+                    Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());           
+                    controlador.agregarTransaccion(transaccion);
                 }
             } catch (Exception e) {
             }   

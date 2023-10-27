@@ -6,6 +6,7 @@ package Controladores;
 
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import Modelos.Transaccion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +21,10 @@ public class ControladorVentanaPrestamoLibro {
     
     public ControladorVentanaPrestamoLibro(){
         
+    }
+    
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
     }
     
     public ResultSet getRs(){

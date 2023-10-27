@@ -7,6 +7,7 @@ package Controladores;
 import Modelos.Categoria;
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +26,10 @@ import java.io.FileNotFoundException;
 public class ControladorVentanaHistoriaPyD {
 
     public ControladorVentanaHistoriaPyD() {
+    }
+    
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
     }
     
     public  Libro buscarLibro (String codigo_libro){

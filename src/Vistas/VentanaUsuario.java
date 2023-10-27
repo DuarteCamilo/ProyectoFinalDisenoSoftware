@@ -6,7 +6,10 @@ package Vistas;
 import Modelos.Usuario;
 import javax.swing.JOptionPane;
 import Controladores.ControladorVentanaUsuario;
+import Modelos.Transaccion;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -84,6 +87,8 @@ public class VentanaUsuario extends javax.swing.JFrame {
         btnVentanaDevolucion = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         btnVentanaHistorial = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        btnVentanaHistorial1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -261,7 +266,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
         jLabel8.setText("Datos Personales");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 290, 350));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 290, 360));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -479,12 +484,39 @@ public class VentanaUsuario extends javax.swing.JFrame {
 
         jPanel6.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 120, 30));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 200, 320));
+        jPanel13.setBackground(new java.awt.Color(127, 85, 57));
+
+        btnVentanaHistorial1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        btnVentanaHistorial1.setForeground(new java.awt.Color(255, 255, 255));
+        btnVentanaHistorial1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnVentanaHistorial1.setText("Historial Transacciones");
+        btnVentanaHistorial1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentanaHistorial1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnVentanaHistorial1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVentanaHistorial1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel6.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 120, 30));
+
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 200, 350));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Mas opciones");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -494,7 +526,9 @@ public class VentanaUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -505,6 +539,12 @@ public class VentanaUsuario extends javax.swing.JFrame {
         VentanaLogin login = new VentanaLogin();
         login.setVisible(true);
         this.dispose();
+        String accion = "Cerrar Sesión";
+        LocalDate fecha = LocalDate.now();
+        LocalTime hora = LocalTime.now();
+        String detalles = "El usuario cerró sesión";
+        Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());           
+        controlador.agregarTransaccion(transaccion);
     }//GEN-LAST:event_btnCerrarSesionMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
@@ -525,6 +565,12 @@ public class VentanaUsuario extends javax.swing.JFrame {
                     VentanaUsuario usuarioo = new VentanaUsuario(usuario1);
                     usuarioo.setVisible(true);
                     this.dispose();
+                    String accion = "Editar Usuario";
+                    LocalDate fecha = LocalDate.now();
+                    LocalTime hora = LocalTime.now();
+                    String detalles = "El usuario " + usuario.getCedula() +" edito su informacion" ;
+                    Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+                    controlador.agregarTransaccion(transaccion);  
                     
                 }else{
                     VentanaUsuario usuarioo = new VentanaUsuario(usuario);
@@ -653,6 +699,12 @@ public class VentanaUsuario extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnVentanaHistorialMouseClicked
 
+    private void btnVentanaHistorial1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentanaHistorial1MouseClicked
+        VentanaTransacciones x = new VentanaTransacciones( usuario);
+        x.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaHistorial1MouseClicked
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -664,6 +716,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel btnVentanaDevolucion;
     private javax.swing.JLabel btnVentanaFiltro;
     private javax.swing.JLabel btnVentanaHistorial;
+    private javax.swing.JLabel btnVentanaHistorial1;
     private javax.swing.JLabel btnVentanaPrestamo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -678,6 +731,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

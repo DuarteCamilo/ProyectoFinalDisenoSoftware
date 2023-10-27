@@ -111,7 +111,7 @@ public class ServiceCategoriaLibros implements DAO {
                 sql = "UPDATE categorias_libros SET nombre_categoria=? WHERE id_categoria=?;";
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, nombre_categoria);
-                ps.setInt(2, id_categoria);System.out.println(ps);
+                ps.setInt(2, id_categoria);
                 ps.executeUpdate();
                 ps.close();
                 return true;  

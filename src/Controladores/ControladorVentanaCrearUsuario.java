@@ -4,8 +4,10 @@
  */
 package Controladores;
 
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.sql.SQLException;
+import servicios.ServiceTransacciones;
 import servicios.ServiceUsuario;
 
 /**
@@ -20,4 +22,7 @@ public class ControladorVentanaCrearUsuario {
     public boolean crearUsuario(Usuario usuario) {
         return ServiceUsuario.getINSTANCE().agregar(usuario);
     }    
+    public void agregarTransaccion(Transaccion transaccion) {
+        ServiceTransacciones.getINSTANCE().agregar(transaccion);
+    }
 }

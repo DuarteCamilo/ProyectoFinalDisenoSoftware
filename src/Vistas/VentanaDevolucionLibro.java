@@ -3,12 +3,14 @@ package Vistas;
 import Controladores.ControladorVentanaDevolucionLibro;
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import Vistas.VentanaUsuario;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -90,11 +92,11 @@ public class VentanaDevolucionLibro extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id Prestamo", "Codido Libro", "Nombre del Libro", "Fecha Prestamo", "Fecha Vencimiento"
+                "Id Prestamo", "Codido Libro", "Nombre del Libro", "Fecha Prestamo", "Fecha Vencimiento", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -117,6 +119,7 @@ public class VentanaDevolucionLibro extends javax.swing.JFrame {
             tablaLibrosEnPrestamo.getColumnModel().getColumn(2).setResizable(false);
             tablaLibrosEnPrestamo.getColumnModel().getColumn(3).setResizable(false);
             tablaLibrosEnPrestamo.getColumnModel().getColumn(4).setResizable(false);
+            tablaLibrosEnPrestamo.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 570, 180));
@@ -399,12 +402,19 @@ public class VentanaDevolucionLibro extends javax.swing.JFrame {
         
         try {
             LocalDate fecha_devolucion = LocalDate.now();
-            int preestamo_id = Integer.parseInt(selectedItem.toString());
-            boolean respuesta = controlador.devolucion(preestamo_id, fecha_devolucion.toString());
+            int prestamo_id = Integer.parseInt(selectedItem.toString());
+            boolean respuesta = controlador.devolucion(prestamo_id, fecha_devolucion.toString());
             if(respuesta){
+                PrestamoLibro prestamo = controlador.buscarPrestamo(prestamo_id);
+                Libro libro = controlador.buscarLibro(prestamo.getCodigo_libro());
                 actualizarTabla(usuario.getCedula());
                 actualizarComboBox(usuario.getCedula());
-                
+                String accion = "Devolucion Libro";
+                LocalDate fecha = LocalDate.now();
+                LocalTime hora = LocalTime.now();
+                String detalles = "El usuario " + usuario.getCedula() +" regreso el libro "+ libro.getTitulo() ;
+                Transaccion transaccion = new Transaccion(accion, fecha, hora, detalles, usuario.getCedula());               
+                controlador.agregarTransaccion(transaccion);             
             }
             
         } catch (Exception e) {
@@ -427,20 +437,24 @@ public class VentanaDevolucionLibro extends javax.swing.JFrame {
             }
         }catch(NullPointerException e){
         }
+        LocalDate hoy = LocalDate.now();
         try{
             ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos(cedula);
             for (int i = 0; i < listaPrestamos.size(); i++) {
                 PrestamoLibro aux = listaPrestamos.get(i);
-                if(aux.getFecha_devolucion() == null){
+                if(aux.getFecha_devolucion() == null && aux.getFecha_vencimiento().isAfter(hoy)){
                     Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento()};
+                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , "En prestamo"};
+                    modelo.addRow(ob);
+                }else if(aux.getFecha_devolucion() == null  && aux.getFecha_vencimiento().isBefore(hoy) ){
+                    Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , "Retrasado"};
                     modelo.addRow(ob);
                 }
             }
 
             }catch(Exception ex){
                 System.err.println(ex.toString());
-                System.out.println("hhhay");
             }
     }
     public void actualizarComboBox(int cedula) {
