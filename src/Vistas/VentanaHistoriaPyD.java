@@ -5,10 +5,13 @@
 package Vistas;
 import Modelos.Usuario;
 import Controladores.ControladorVentanaHistoriaPyD;
+import Modelos.Categoria;
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -27,6 +30,9 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         this.controlador = new ControladorVentanaHistoriaPyD();
         modelo=(DefaultTableModel)tablaHistorial.getModel();
         actualizarTabla(usuario.getCedula());
+        txtid.setEditable(false);
+        txtid.setText(String.valueOf(usuario.getCedula()));
+        btBuscar.setEnabled(false);
     }
 
     /**
@@ -46,6 +52,10 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cboFiltro2 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtid = new javax.swing.JTextField();
+        btBuscar = new javax.swing.JButton();
+        btImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,17 +66,17 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         tablaHistorial.setForeground(new java.awt.Color(127, 85, 57));
         tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id Prestamo", "Codido Libro", "Nombre del Libro", "Fecha Prestamo", "Fecha Vencimiento", "Fecha Devolución"
+                "Nombre Usuario", "Cedula", "Nombre del Libro", "Categoria", "Fecha Prestamo", "Fecha Vencimiento", "Fecha Devolución"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -78,17 +88,21 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaHistorial);
         if (tablaHistorial.getColumnModel().getColumnCount() > 0) {
             tablaHistorial.getColumnModel().getColumn(0).setResizable(false);
-            tablaHistorial.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tablaHistorial.getColumnModel().getColumn(0).setPreferredWidth(50);
             tablaHistorial.getColumnModel().getColumn(1).setResizable(false);
-            tablaHistorial.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tablaHistorial.getColumnModel().getColumn(1).setPreferredWidth(30);
             tablaHistorial.getColumnModel().getColumn(2).setResizable(false);
             tablaHistorial.getColumnModel().getColumn(3).setResizable(false);
+            tablaHistorial.getColumnModel().getColumn(3).setPreferredWidth(40);
             tablaHistorial.getColumnModel().getColumn(4).setResizable(false);
+            tablaHistorial.getColumnModel().getColumn(4).setPreferredWidth(50);
             tablaHistorial.getColumnModel().getColumn(5).setResizable(false);
             tablaHistorial.getColumnModel().getColumn(5).setPreferredWidth(50);
+            tablaHistorial.getColumnModel().getColumn(6).setResizable(false);
+            tablaHistorial.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 681, 217));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 710, 300));
 
         btVolver.setBackground(new java.awt.Color(127, 85, 57));
         btVolver.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -100,49 +114,92 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 btVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(btVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        jPanel1.add(btVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, 30));
 
         cboFiltro.setBackground(new java.awt.Color(127, 85, 57));
         cboFiltro.setForeground(new java.awt.Color(255, 255, 255));
-        cboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccionar-", "En Prestamo", "Entregado" }));
+        cboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccionar-", "En Prestamo", "Entregado", "Vencimiento" }));
         cboFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboFiltroActionPerformed(evt);
             }
         });
-        jPanel1.add(cboFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, 129, -1));
+        jPanel1.add(cboFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 60, 129, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 85, 57));
         jLabel1.setText("Filtro Usuario:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         cboFiltro2.setBackground(new java.awt.Color(127, 85, 57));
         cboFiltro2.setForeground(new java.awt.Color(255, 255, 255));
+        cboFiltro2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal", "General", "Otro Usuario" }));
         cboFiltro2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboFiltro2ActionPerformed(evt);
             }
         });
-        jPanel1.add(cboFiltro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 129, -1));
+        jPanel1.add(cboFiltro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 129, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(127, 85, 57));
-        jLabel2.setText("Filtro Estado:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
+        jLabel2.setText("Cedula:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel3.setText("Filtro Estado:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, -1, -1));
+
+        txtid.setBackground(new java.awt.Color(255, 255, 255));
+        txtid.setForeground(new java.awt.Color(127, 85, 57));
+        txtid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtid.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtidKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 130, 30));
+
+        btBuscar.setBackground(new java.awt.Color(127, 85, 57));
+        btBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btBuscar.setText("Buscar");
+        btBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, 30));
+
+        btImprimir.setBackground(new java.awt.Color(127, 85, 57));
+        btImprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btImprimir.setForeground(new java.awt.Color(255, 255, 255));
+        btImprimir.setText("Imprimir");
+        btImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImprimirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVolverActionPerformed
@@ -153,39 +210,143 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
 
     private void cboFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltroActionPerformed
         Object selectedItem = cboFiltro.getSelectedItem();
-        if(selectedItem.toString().equals("-Seleccionar-")){
-            actualizarTabla(usuario.getCedula());
-        }else if(selectedItem.toString().equals("En Prestamo")){
-            actualizarTablaEnPrestamo(usuario.getCedula());   
-        }else if(selectedItem.toString().equals("Entregado")){
-          actualizarTablaEntregado(usuario.getCedula());  
+        
+        switch (selectedItem.toString()) {
+            case "-Seleccionar-":
+                if( txtid.getText().equals("")){
+                    actualizarTablaGeneral();
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaGeneral();
+                }else{
+                    actualizarTabla(Integer.parseInt(txtid.getText()));
+                }   break;
+            case "En Prestamo":
+                if( txtid.getText().equals("")){
+                    actualizarTablaEnPrestamoGeneral();
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaEnPrestamoGeneral();
+                }else{
+                    actualizarTablaEnPrestamo(Integer.parseInt(txtid.getText()));
+                }   break;
+            case "Entregado":
+                if( txtid.getText().equals("")){
+                    actualizarTablaEntregadoGenral();
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaEntregadoGenral();
+                }else{
+                    actualizarTablaEntregado(Integer.parseInt(txtid.getText()));
+                }   break;
+            case "Vencimiento":
+                if( txtid.getText().equals("")){
+                    actualizarTablaVencimientoGenral();
+                }else if(Integer.parseInt(txtid.getText()) <= 0 ){
+                    actualizarTablaVencimientoGenral();
+                }else{
+                    actualizarTablaVencimiento(Integer.parseInt(txtid.getText()));
+                }   break;
+            default:   
+                break;
         }
+        
     }//GEN-LAST:event_cboFiltroActionPerformed
 
     private void cboFiltro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltro2ActionPerformed
-        // TODO add your handling code here:
+        Object selectedItem = cboFiltro2.getSelectedItem();
+        if(selectedItem.toString().equals("Personal")){
+            actualizarTabla(usuario.getCedula());
+            txtid.setText(String.valueOf(usuario.getCedula()));
+        }else if(selectedItem.toString().equals("General")){
+            actualizarTablaGeneral();
+            txtid.setEditable(false);
+            txtid.setText("0");
+            btBuscar.setEnabled(false);
+        }else if(selectedItem.toString().equals("Otro Usuario")){
+            txtid.setEditable(true);
+            txtid.setText("");
+            btBuscar.setEnabled(true);    
+        }
     }//GEN-LAST:event_cboFiltro2ActionPerformed
+
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        if (txtid.getText().equals("")) {
+            JOptionPane.showMessageDialog( null , "Ingrese un número de cédula para buscar su historial de préstamos");
+            return;
+        }
+
+        try {
+            int cedula = Integer.parseInt(txtid.getText());
+            Usuario usuario1 = controlador.buscarUsu(cedula);
+            if (usuario1 != null) {
+                actualizarTabla(cedula);    
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario con el número de cédula: " + cedula + " no está registrado");
+                txtid.setText("");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese un número de cédula válido");
+        }    
+           
+    }//GEN-LAST:event_btBuscarActionPerformed
+
+    private void txtidKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
+        }else if (txtid.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume();
+            
+        }
+    }//GEN-LAST:event_txtidKeyTyped
+
+    private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(rootPane, "No hay datos en la tabla para generar un reporte ");
+            return;
+        }
+        ArrayList<ArrayList<String>> tabla = new ArrayList<>();
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            ArrayList<String> fila = new ArrayList<>();
+
+            for (int j = 0; j < modelo.getColumnCount(); j++) {
+                fila.add(modelo.getValueAt(i, j).toString());
+            }
+
+            tabla.add(fila);
+        }
+
+        controlador.enviarDatos(tabla);
+    
+    }//GEN-LAST:event_btImprimirActionPerformed
 
  
     
     public void actualizarTabla(int cedula){
-       
         boorarTabla();
+        LocalDate hoy = LocalDate.now();
         try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos(cedula);
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
             for (int i = 0; i < listaPrestamos.size(); i++) {
                 PrestamoLibro aux = listaPrestamos.get(i);
                 LocalDate x = aux.getFecha_devolucion();
-                
+                LocalDate y = aux.getFecha_vencimiento();
                 Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                
-                if(x == null){
+                Usuario usu = controlador.buscarUsu(cedula);
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
+                if(x == null && y.isAfter(hoy)){
                     String fecha_devolucion = "En prestamo";
-                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    modelo.addRow(ob);
+                    
+                }else if(x == null && y.isBefore(hoy)){
+                    String fecha_devolucion = "Retrasado";
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
                     modelo.addRow(ob);
                     
                 }else{
-                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), cedula ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
                     modelo.addRow(ob);
                     
                 }
@@ -197,19 +358,44 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
     }
     
     public void actualizarTablaEnPrestamo(int cedula){
-       
         boorarTabla();
         try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos(cedula);
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
             for (int i = 0; i < listaPrestamos.size(); i++) {
                 PrestamoLibro aux = listaPrestamos.get(i);
                 
                 Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
-                
+                Usuario usu = controlador.buscarUsu(cedula);
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
                 if(aux.getFecha_devolucion() == null){
                     
                     String fecha_devolucion = "En prestamo";
-                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    modelo.addRow(ob);
+                }
+            }
+
+            }catch(Exception ex){
+                System.err.println(ex.toString());
+            }
+    }
+    
+    public void actualizarTablaEnPrestamoGeneral(){
+        boorarTabla();
+        LocalDate hoy = LocalDate.now();
+        try{
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
+            for (int i = 0; i < listaPrestamos.size(); i++) {
+                PrestamoLibro aux = listaPrestamos.get(i);
+                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                Usuario usu = controlador.buscarUsu(aux.getCedula());
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
+                LocalDate y = aux.getFecha_vencimiento();
+                
+                if(aux.getFecha_devolucion() == null && y.isAfter(hoy) ){
+                    
+                    String fecha_devolucion = "En prestamo";
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
                     modelo.addRow(ob);
                 }
             }
@@ -222,15 +408,37 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
        
         boorarTabla();
         try{
-            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos(cedula);
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
             for (int i = 0; i < listaPrestamos.size(); i++) {
                 PrestamoLibro aux = listaPrestamos.get(i);
-                
                 Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                Usuario usu = controlador.buscarUsu(aux.getCedula());
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
+                if(aux.getFecha_devolucion() != null){ 
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), cedula ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
+                    modelo.addRow(ob);
+                    
+                }
+            }
+
+            }catch(Exception ex){
+                System.err.println(ex.toString());
+            }
+    }
+    
+    public void actualizarTablaEntregadoGenral(){
+       
+        boorarTabla();
+        try{
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
+            for (int i = 0; i < listaPrestamos.size(); i++) {
+                PrestamoLibro aux = listaPrestamos.get(i);
+                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                Usuario usu = controlador.buscarUsu(aux.getCedula());
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
                 
                 if(aux.getFecha_devolucion() != null){ 
-                
-                    Object[] ob = {aux.getId_prestamo() , aux.getCodigo_libro() , libro.getTitulo() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), aux.getCedula() ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
                     modelo.addRow(ob);
                     
                 }
@@ -252,15 +460,107 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         }
         
     }
+    
+    public void actualizarTablaGeneral(){
+       LocalDate hoy = LocalDate.now();
+        boorarTabla();
+        try{
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
+            for (int i = 0; i < listaPrestamos.size(); i++) {
+                PrestamoLibro aux = listaPrestamos.get(i);
+                LocalDate x = aux.getFecha_devolucion();
+                LocalDate y = aux.getFecha_vencimiento();
+                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                Usuario usu = controlador.buscarUsu(aux.getCedula());
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
+                
+                if(x == null &&  y.isAfter(hoy) ){
+                    String fecha_devolucion = "En prestamo";
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    modelo.addRow(ob);
+                    
+                }else if(x == null && y.isBefore(hoy)){
+                    String fecha_devolucion = "Retrasado";
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    modelo.addRow(ob);
+                    
+                }else{
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), aux.getCedula() ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
+                    modelo.addRow(ob);
+                    
+                }
+            }
+
+            }catch(Exception ex){
+                System.err.println(ex.toString());
+            }
+    }
+    
+    
+    private void actualizarTablaVencimientoGenral() {
+        boorarTabla();
+        LocalDate hoy = LocalDate.now();
+        try{
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamos();
+            for (int i = 0; i < listaPrestamos.size(); i++) {
+                PrestamoLibro aux = listaPrestamos.get(i);
+                LocalDate x = aux.getFecha_devolucion();
+                LocalDate y = aux.getFecha_vencimiento();
+                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                Usuario usu = controlador.buscarUsu(aux.getCedula());
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
+                
+                if(x == null && y.isBefore(hoy)){
+                    String fecha_devolucion = "Retrasado";
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,aux.getCedula() ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    modelo.addRow(ob);                   
+                }
+            }
+
+            }catch(Exception ex){
+                System.err.println(ex.toString());
+            }
+    }
+
+    private void actualizarTablaVencimiento(int cedula) {
+        boorarTabla();
+        LocalDate hoy = LocalDate.now();
+        try{
+            ArrayList<PrestamoLibro> listaPrestamos = controlador.traerPrestamosCedula(cedula);
+            for (int i = 0; i < listaPrestamos.size(); i++) {
+                PrestamoLibro aux = listaPrestamos.get(i);
+                LocalDate y = aux.getFecha_vencimiento();
+                Libro libro = controlador.buscarLibro(aux.getCodigo_libro());
+                Usuario usu = controlador.buscarUsu(cedula);
+                Categoria categoria = controlador.obternerCategoria(libro.getCategoria());
+                
+                if(aux.getFecha_devolucion() == null && y.isBefore(hoy)){
+                    String fecha_devolucion = "Retrasado";
+                    Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,  cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
+                    modelo.addRow(ob);                   
+                }
+            }
+
+            }catch(Exception ex){
+                System.err.println(ex.toString());
+            }
+    }
+    
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBuscar;
+    private javax.swing.JButton btImprimir;
     private javax.swing.JButton btVolver;
     private javax.swing.JComboBox<String> cboFiltro;
     private javax.swing.JComboBox<String> cboFiltro2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaHistorial;
+    private javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
+
 }

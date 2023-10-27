@@ -4,14 +4,19 @@
  */
 package Controladores;
 
+import Modelos.Categoria;
 import Modelos.Libro;
 import Modelos.PrestamoLibro;
+import Modelos.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import servicios.ServiceGestionPrestamos;
-import servicios.ServiceLibros;
+import servicios.*;
+import Reporte.GenerarReporte;
+import com.itextpdf.text.DocumentException;
+import java.awt.HeadlessException;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -46,9 +51,55 @@ public class ControladorVentanaHistoriaPyD {
         }  
     }
     
-    public ArrayList<PrestamoLibro> traerPrestamos(int cedula) {
-        return ServiceGestionPrestamos.getINSTANCE().buscarPrestamosActivosPorUsuario(cedula);
-         
+    public ArrayList<PrestamoLibro> traerPrestamosCedula(int cedula) {
+        return ServiceGestionPrestamos.getINSTANCE().buscarPrestamosActivosPorUsuario(cedula);        
+    }
+    
+    public ArrayList<PrestamoLibro> traerPrestamos() {
+        return ServiceGestionPrestamos.getINSTANCE().getAll();         
+    }
+    
+    public Usuario buscarUsu(int cedula){
+        ResultSet rs = ServiceUsuario.getINSTANCE().buscar(cedula);
+        try {
+            if(rs.next()){
+                String contraseniaInterna = rs.getString("contrasena");
+                String nombre = rs.getString("nombre");
+                String apellidos = rs.getString("apellido");
+                int id_usuario = rs.getInt("id_usuario");
+                String telefono = rs.getString("telefono");
+                String correo = rs.getString("correo");
+                Usuario usuario = new Usuario(id_usuario, cedula, nombre, apellidos, telefono, correo, contraseniaInterna );
+                return usuario; 
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return null;
+        
+    }
+
+    public void enviarDatos(ArrayList<ArrayList<String>> tabla) {
+        try {
+            GenerarReporte.generarReporte(tabla);
+        } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Categoria obternerCategoria ( int id_categoria ){
+        try {
+            ResultSet rs = ServiceCategoriaLibros.getINSTANCE().buscar(id_categoria);
+            if(rs.next()){
+                String nombre_categoria = rs.getString("nombre_categoria");
+                Categoria categoria = new Categoria(id_categoria, nombre_categoria);
+                return categoria ;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        return null;
     }
     
 }

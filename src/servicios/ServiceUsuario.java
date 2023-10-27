@@ -248,7 +248,7 @@ public class ServiceUsuario implements DAO {
             rs = ps.executeQuery();
             return rs;
         
-        }catch( Exception ex){
+        }catch( SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
         return null;

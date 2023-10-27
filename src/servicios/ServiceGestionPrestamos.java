@@ -106,23 +106,23 @@ public class ServiceGestionPrestamos  implements DAO{
                 String fechaDevolucionString = rs.getString("fecha_devolucion");
                 int cedula = rs.getInt("cedula");
 
-                if(fechaPrestamoString.equals("")  || fechaVencimientoString.equals("") || fechaDevolucionString.equals("") ){
+                if(fechaDevolucionString.equals("")){
                     LocalDate fecha_devolucion = null;
-                    LocalDate fecha_prestamo = null;
-                    LocalDate fecha_vencimiento = null;
-                    PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento , fecha_devolucion);
-                    prestamos.add(prestamo);
-                }else{
                     LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
                     LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
-                    LocalDate fecha_devolucion = LocalDate.parse(fechaVencimientoString);
                     PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento , fecha_devolucion);
                     prestamos.add(prestamo);
-
+                    
+                }else{
+                    LocalDate fecha_devolucion = LocalDate.parse(fechaDevolucionString);
+                    LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
+                    LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
+                    PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento , fecha_devolucion);
+                    prestamos.add(prestamo);                   
                 }
+            }
             ps.close();
             return prestamos;
-            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
