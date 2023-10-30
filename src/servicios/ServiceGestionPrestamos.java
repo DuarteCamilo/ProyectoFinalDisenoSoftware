@@ -68,7 +68,7 @@ public class ServiceGestionPrestamos  implements DAO{
                 String fechaPrestamoString = rs.getString("fecha_prestamo");
                 String fechaVencimientoString = rs.getString("fecha_vencimiento");
                 String fechaDevolucionString = rs.getString("fecha_devolucion");
-                if(fechaDevolucionString.equals("")){
+                if(fechaDevolucionString.equals(" ")){
                     LocalDate fecha_devolucion = null;
                     LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
                     LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
@@ -106,7 +106,7 @@ public class ServiceGestionPrestamos  implements DAO{
                 String fechaDevolucionString = rs.getString("fecha_devolucion");
                 int cedula = rs.getInt("cedula");
 
-                if(fechaDevolucionString.equals("")){
+                if(fechaDevolucionString.equals(" ")){
                     LocalDate fecha_devolucion = null;
                     LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
                     LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
@@ -154,12 +154,13 @@ public class ServiceGestionPrestamos  implements DAO{
                     ps.executeUpdate();
                     ps.close();
 
-                    sql = "INSERT INTO prestamos (cedula, codigo_libro, fecha_prestamo, fecha_vencimiento) VALUES (?, ?, ?, ?)";
+                    sql = "INSERT INTO prestamos (cedula, codigo_libro, fecha_prestamo, fecha_vencimiento, fecha_devolucion) VALUES (?, ?, ?, ?, ?)";
                     ps = conn.prepareStatement(sql);
                     ps.setInt(1, cedula); 
                     ps.setString(2, codigo_libro); 
                     ps.setString(3, fecha_prestamo);
                     ps.setString(4, fecha_vencimiento);
+                    ps.setString(5, " ");
                     ps.executeUpdate();
                     ps.close();
                     JOptionPane.showMessageDialog(null, "Préstamo registrado exitosamente.");

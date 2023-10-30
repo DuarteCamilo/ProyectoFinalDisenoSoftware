@@ -318,7 +318,6 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
 
             tabla.add(fila);
         }
-
         controlador.enviarDatos(tabla);
         String accion = "Generar Reporte";
         LocalDate fecha = LocalDate.now();
@@ -353,7 +352,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                     Object[] ob = { usu.getNombre()+" "+ usu.getApellidos() ,cedula ,  libro.getTitulo() , categoria.getNombre_categoria() , aux.getFecha_prestamo(),aux.getFecha_vencimiento() , fecha_devolucion};
                     modelo.addRow(ob);
                     
-                }else{
+                }else {
                     Object[] ob = { usu.getNombre()+" "+ usu.getApellidos(), cedula ,   libro.getTitulo() , categoria.getNombre_categoria() ,aux.getFecha_prestamo(),aux.getFecha_vencimiento() , aux.getFecha_devolucion()};
                     modelo.addRow(ob);
                     

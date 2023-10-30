@@ -4,12 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Controladores/ControladorVentanaHistoriaPyD.java</file>
-            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Controladores/ControladorLogin.java</file>
             <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Vistas/VentanaHistoriaPyD.java</file>
-            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Controladores/ControladorVentanaGestionLibros.java</file>
-            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/ConexioDB/ConexionDB.java</file>
-            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/servicios/ServiceUsuario.java</file>
-            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/Reporte/GenerarReporte.java</file>
+            <file>file:/C:/Users/cduar/OneDrive/Documentos/Programacion/EAM/Semestre_4/Diseno_Software/ProyectoFinalDisenoSoftware/src/servicios/ServiceGestionPrestamos.java</file>
         </group>
     </open-files>
 </project-private>
