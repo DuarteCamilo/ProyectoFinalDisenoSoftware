@@ -13,7 +13,12 @@ import Modelos.Usuario;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -31,6 +36,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     public VentanaLogin() {
         initComponents();
         this.controlador = new ControladorLogin();
+        desahabiltarControl_v();
     }
 
     /**
@@ -304,6 +310,14 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnCreate.setForeground(Color.BLACK);
     }//GEN-LAST:event_btnCreateMouseExited
 
+    
+    private void desahabiltarControl_v() {
+        for (JTextField textField : Arrays.asList(txtContrasenia ,txtCorreo)) {
+            ActionMap map = textField.getActionMap();
+            Action action = map.get(DefaultEditorKit.pasteAction);
+            action.setEnabled(false);
+        }
+    }
     /**
      * @param args the command line arguments
      */

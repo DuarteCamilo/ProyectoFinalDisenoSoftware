@@ -29,5 +29,9 @@ public class ControladorVentanaUsuario {
     public boolean eliminar( int id) {
         return ServiceUsuario.getINSTANCE().eliminar(id);
     }
+    
+    public Usuario buscar( int cedula) {
+        return ServiceUsuario.getINSTANCE().buscar(cedula);
+    }
    
 }

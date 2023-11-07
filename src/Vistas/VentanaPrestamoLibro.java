@@ -13,9 +13,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultEditorKit;
 /**
  *
  * @author diaza
@@ -38,6 +43,7 @@ public class VentanaPrestamoLibro extends javax.swing.JFrame {
         actualizarTabla();
         actualizarComboBox();
         RevisarFechasVencimiento();
+        desahabiltarControl_v();
 
     }
 
@@ -506,6 +512,13 @@ public class VentanaPrestamoLibro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Nop puede perdir mas libros prestados, tiene: "+ sumaL + " que pasaron su fecha de entrega.");
             btPrestamo.setEnabled(false);
             btPrestamo.removeMouseListener(btPrestamo.getMouseListeners()[0]);
+        }
+    }
+    private void desahabiltarControl_v() {
+        for (JTextField textField : Arrays.asList(txtCant , txtNombre)) {
+            ActionMap map = textField.getActionMap();
+            Action action = map.get(DefaultEditorKit.pasteAction);
+            action.setEnabled(false);
         }
     }
     

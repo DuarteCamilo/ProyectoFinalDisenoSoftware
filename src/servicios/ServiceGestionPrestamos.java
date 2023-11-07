@@ -220,14 +220,28 @@ public class ServiceGestionPrestamos  implements DAO{
     }
 
     @Override
-    public ResultSet buscar(Object insertion) {
+    public PrestamoLibro buscar(Object insertion) {
         try {
             int prestamo_id = (int)insertion;
             sql = "SELECT * FROM prestamos WHERE prestamo_id = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, prestamo_id);
             rs = ps.executeQuery();
-            return rs;
+            if (rs.next()) {
+                String codigo_libro = rs.getString("codigo_libro");
+                String fechaPrestamoString = rs.getString("fecha_prestamo");
+                String fechaVencimientoString = rs.getString("fecha_vencimiento");
+                String fechaDevolucionString = rs.getString("fecha_devolucion");
+                int cedula = rs.getInt("cedula");          
+                LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
+                LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
+                LocalDate fecha_devolucion = LocalDate.parse(fechaDevolucionString);
+                PrestamoLibro prestamo = new PrestamoLibro(prestamo_id, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento, fecha_devolucion);
+                return prestamo;
+            } else {
+                JOptionPane.showMessageDialog(null, "El préstamo con el id " + prestamo_id + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             

@@ -32,27 +32,7 @@ public class ControladorVentanaDevolucionLibro {
     }
 
     public  Libro buscarLibro (String codigo_libro){
-        try {
-            ResultSet rs = ServiceLibros.getINSTANCE().buscar(codigo_libro);
-            
-            if(rs.next()){
-                int id_libro = rs.getInt("id_libro");
-                String titulo = rs.getString("titulo");
-                String autor = rs.getString("autor");
-                int categoria = rs.getInt("categoria");
-                int cant_dispo = rs.getInt("cant_dispo");
-                int anio_publicacion = rs.getInt("anio_publicacion");
-                Libro libro = new Libro(id_libro, codigo_libro, titulo, autor, categoria, anio_publicacion, cant_dispo);
-                return libro;      
-            }else{
-                JOptionPane.showMessageDialog(null, "El Libro con el codigo " + codigo_libro + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);                 
-                return null;
-            }
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }  
+        return ServiceLibros.getINSTANCE().buscar(codigo_libro);
     }
 
     public boolean devolucion( int prestamo_id  , String fecha_devolucion) {
@@ -61,28 +41,8 @@ public class ControladorVentanaDevolucionLibro {
     }
 
     public PrestamoLibro buscarPrestamo(int id_prestamo) {
-    try {
-        ResultSet rs = ServiceGestionPrestamos.getINSTANCE().buscar(id_prestamo);
-
-        if (rs.next()) {
-            String codigo_libro = rs.getString("codigo_libro");
-            String fechaPrestamoString = rs.getString("fecha_prestamo");
-            String fechaVencimientoString = rs.getString("fecha_vencimiento");
-            String fechaDevolucionString = rs.getString("fecha_devolucion");
-            int cedula = rs.getInt("cedula");          
-            LocalDate fecha_prestamo = LocalDate.parse(fechaPrestamoString);
-            LocalDate fecha_vencimiento = LocalDate.parse(fechaVencimientoString);
-            LocalDate fecha_devolucion = LocalDate.parse(fechaDevolucionString);
-            PrestamoLibro prestamo = new PrestamoLibro(id_prestamo, cedula, codigo_libro, fecha_prestamo, fecha_vencimiento, fecha_devolucion);
-            return prestamo;
-        } else {
-            JOptionPane.showMessageDialog(null, "El préstamo con el id " + id_prestamo + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        return null;
-    }
-}
+        return ServiceGestionPrestamos.getINSTANCE().buscar(id_prestamo);
+    }  
+    
+    
 }

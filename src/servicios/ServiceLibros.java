@@ -101,9 +101,9 @@ public class ServiceLibros implements DAO {
             int categoria = libro.getCategoria() ;
             int anio_publicacion = libro.getAnio_publicacion();
             int cant_dispo = libro.getCant_dispo() ;
-            rs = buscar(codigo_libro);
+            Libro aux = buscar(codigo_libro);
 
-            if (rs.next()) {                
+            if (aux != null) {                
                 JOptionPane.showMessageDialog(null, "El libro con el codigo " + codigo_libro + " ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
@@ -132,9 +132,9 @@ public class ServiceLibros implements DAO {
     public boolean eliminar(Object insertion) {
         try{
             String codigo_libro = (String)insertion;
-            rs = buscar(codigo_libro);
-            
-            if(rs.next()){
+            Libro aux = buscar(codigo_libro);
+
+            if (aux != null) { 
                 sql = "DELETE from libros where codigo_libro =?;";
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, codigo_libro );
@@ -164,9 +164,9 @@ public class ServiceLibros implements DAO {
             int categoria = libro.getCategoria() ;
             int anio_publicacion = libro.getAnio_publicacion();
             int cant_dispo = libro.getCant_dispo() ;
-            rs = buscar(codigo_libro);
+            Libro aux = buscar(codigo_libro);
             
-            if(rs.next()){
+            if(aux != null){
                 sql = "UPDATE libros set titulo=?,autor=?,categoria=?,anio_publicacion=?,cant_dispo=? where codigo_libro=?;";
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, titulo);
@@ -190,17 +190,26 @@ public class ServiceLibros implements DAO {
     }
 
     @Override
-    public ResultSet buscar(Object insertion) {
+    public Libro buscar(Object insertion) {
         try {
             String codigo_libro = (String)insertion;
             sql = "SELECT * FROM libros WHERE codigo_libro = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, codigo_libro);
             rs = ps.executeQuery();
-            return rs;   
+            if(rs.next()){
+                int id_libro = rs.getInt("id_libro");
+                String titulo = rs.getString("titulo");
+                String autor = rs.getString("autor");
+                int categoria = rs.getInt("categoria");
+                int cant_dispo = rs.getInt("cant_dispo");
+                int anio_publicacion = rs.getInt("anio_publicacion");
+                Libro libro = new Libro(id_libro, codigo_libro, titulo, autor, categoria, anio_publicacion, cant_dispo);
+                return libro;      
+            }
         }catch( SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
-        return rs;
+        return null;
     }
 }

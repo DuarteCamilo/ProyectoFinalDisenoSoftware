@@ -18,9 +18,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -40,10 +45,9 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         this.controlador = new ControladorVentanaGestionLibros();
         this.usuario = usuario;
         modelo=(DefaultTableModel)tablaLibros.getModel();
-
-        //txtCodigo.setEditable(false);
         actualizarTabla();
         actualizarComboBox();
+        desahabiltarControl_v();
     }
 
     /**
@@ -485,12 +489,13 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
                 txtAutor.setText(libro.getAutor());
                 txtAnioPublicacion.setText(String.valueOf(libro.getAnio_publicacion()));
                 txtCantidadDispo.setText(String.valueOf(libro.getCant_dispo()));
-                Categoria categoria  = (Categoria)controlador.obternerCategoria(libro.getCategoria());
+                Categoria categoria  = (Categoria)controlador.buscarCategoria(libro.getCategoria());
                 String name = categoria.getNombre_categoria();
                 String completo = String.valueOf(libro.getCategoria()) + "-" + name;
                 cboCategorias.setSelectedItem(completo);
             } else {
-                limpiarCampos();
+                JOptionPane.showMessageDialog(null, "El Libro con el codigo " + codigo_libro + " no está registrado", "Error", JOptionPane.ERROR_MESSAGE);                 
+                txtCodigo.setText("");
             }
             
         }catch(Exception e){
@@ -523,10 +528,8 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
         }else if (txtAnioPublicacion.getText().length() >= 4 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 4 caracteres permitidos");
         }
     }//GEN-LAST:event_txtAnioPublicacionKeyTyped
 
@@ -535,10 +538,8 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
         }else if (txtCantidadDispo.getText().length() >= 5 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 5 caracteres permitidos");
         }
     }//GEN-LAST:event_txtCantidadDispoKeyTyped
 
@@ -678,10 +679,8 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo números y letras"); 
         } else if (txtCodigo.getText().length() >= 10) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 10 caracteres permitidos");
         }
     }//GEN-LAST:event_txtCodigoKeyTyped
 
@@ -690,21 +689,17 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo números y letras"); 
         } else if (txtCodigo.getText().length() >= 10) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 10 caracteres permitidos");
         }    }//GEN-LAST:event_txtBuscarCodigoKeyTyped
 
     private void txtTituloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTituloKeyTyped
         char c = evt.getKeyChar();
         if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo números y letras"); 
+            evt.consume(); 
         } else if (txtCodigo.getText().length() >= 250) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
         }
     }//GEN-LAST:event_txtTituloKeyTyped
 
@@ -713,10 +708,8 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
         } else if (txtAutor.getText().length() >= 250) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
         }
     }//GEN-LAST:event_txtAutorKeyTyped
     public void actualizarTabla(){
@@ -802,6 +795,14 @@ public class VentanaGestionLibros extends javax.swing.JFrame {
         cboCategorias.setSelectedItem("-Seleccionar-");
         txtCodigo.setEditable(true);
         
+    }
+    
+        private void desahabiltarControl_v() {
+        for (JTextField textField : Arrays.asList(txtAnioPublicacion, txtAutor, txtBuscarCodigo ,txtCantidadDispo ,txtCodigo ,txtTitulo)) {
+            ActionMap map = textField.getActionMap();
+            Action action = map.get(DefaultEditorKit.pasteAction);
+            action.setEnabled(false);
+        }
     }
   
 

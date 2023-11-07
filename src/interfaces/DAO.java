@@ -15,5 +15,5 @@ public interface DAO {
     boolean agregar(Object insertion)  ;
     boolean eliminar(Object insertion)   ;
     boolean editar(Object insertion)    ;
-    ResultSet buscar(Object insertion)   ;
+    Object buscar(Object insertion)   ;
 }

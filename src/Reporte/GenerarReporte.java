@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class GenerarReporte {
     
-    public static void generarReporte(ArrayList<ArrayList<String>> tabla) throws DocumentException, HeadlessException, FileNotFoundException {
+    public static void GenerarReporte(ArrayList<ArrayList<String>> tabla) throws DocumentException, HeadlessException, FileNotFoundException {
 
         String numeroAleatorio = generarNumeroAleatorio();
 

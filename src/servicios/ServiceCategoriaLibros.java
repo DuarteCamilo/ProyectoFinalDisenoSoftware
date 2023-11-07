@@ -81,8 +81,8 @@ public class ServiceCategoriaLibros implements DAO {
     public boolean eliminar(Object insertion) {    
         try {
             int id_categoria = (int) insertion;
-            rs = buscar(id_categoria);   
-            if(rs.next()){
+            Categoria aux = buscar(id_categoria);  
+            if(aux != null){
                 sql = "DELETE from categorias_libros where id_categoria=?";
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, id_categoria);
@@ -106,8 +106,8 @@ public class ServiceCategoriaLibros implements DAO {
             Categoria categoria = (Categoria) insertion;
             String nombre_categoria = categoria.getNombre_categoria();
             int id_categoria = categoria.getId_categoria();
-            rs = buscar(id_categoria);  
-            if(rs.next()){
+            Categoria aux = buscar(id_categoria);  
+            if(aux != null){
                 sql = "UPDATE categorias_libros SET nombre_categoria=? WHERE id_categoria=?;";
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, nombre_categoria);
@@ -127,18 +127,23 @@ public class ServiceCategoriaLibros implements DAO {
     }
 
     @Override
-    public ResultSet buscar(Object insertion)  {
+    public Categoria buscar(Object insertion)  {
         try{
             int id_categoria = (int) insertion;
             sql = "SELECT * FROM categorias_libros WHERE id_categoria=?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id_categoria);
             rs = ps.executeQuery();
-            return rs;         
+            if(rs.next()){
+                String nombre_categoria = rs.getString("nombre_categoria");
+                Categoria categoria = new Categoria(id_categoria, nombre_categoria);
+                return categoria ;
+            }        
         }catch( SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
         }  
-        return rs;
+        return null;
     }
 
 }

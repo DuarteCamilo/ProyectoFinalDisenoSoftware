@@ -4,7 +4,7 @@
  */
 package Vistas;
 
-import ConexioDB.ConexionDB;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controladores.ControladorVentanaGestionCategoria;
@@ -12,13 +12,15 @@ import Modelos.Categoria;
 import Modelos.Transaccion;
 import Modelos.Usuario;
 import java.awt.event.KeyEvent;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.JTextField;
+import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -38,6 +40,7 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         this.controlador = new ControladorVentanaGestionCategoria();
         modelo=(DefaultTableModel)tablaCategorias.getModel();
         actualizarTabla();
+        desahabiltarControl_v();
     }
 
     /**
@@ -466,10 +469,8 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
         }else if (txtId.getText().length() >= 5 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 5 caracteres permitidos");
         }
         
         
@@ -480,11 +481,8 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
         if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE ) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
         } else if (txtNombre.getText().length() >= 100) {
             evt.consume();
-
-            JOptionPane.showMessageDialog(null, "Máximo 100 caracteres permitidos");
         }
                 }//GEN-LAST:event_txtNombreKeyTyped
 
@@ -511,6 +509,14 @@ public class VentanaGestionCategoria extends javax.swing.JFrame {
    
         }catch(SQLException ex){
             System.err.println(ex.toString());
+        }
+    }
+    
+    private void desahabiltarControl_v() {
+        for (JTextField textField : Arrays.asList(txtNombre, txtId)) {
+            ActionMap map = textField.getActionMap();
+            Action action = map.get(DefaultEditorKit.pasteAction);
+            action.setEnabled(false);
         }
     }
     

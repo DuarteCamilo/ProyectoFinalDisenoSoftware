@@ -28,7 +28,7 @@ public class ControladorTransacciones {
     
     public void enviarDatos(ArrayList<ArrayList<String>> tabla) {
         try {
-            GenerarReporteTransacciones.generarReporte(tabla);
+            GenerarReporteTransacciones.GenerarReporteTransacciones(tabla);
         } catch (DocumentException | HeadlessException | FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,22 +44,12 @@ public class ControladorTransacciones {
     }
     
     public Usuario buscarUsu(int cedula){
-        ResultSet rs = ServiceUsuario.getINSTANCE().buscar(cedula);
-        try {
-            if(rs.next()){
-                String contraseniaInterna = rs.getString("contrasena");
-                String nombre = rs.getString("nombre");
-                String apellidos = rs.getString("apellido");
-                int id_usuario = rs.getInt("id_usuario");
-                String telefono = rs.getString("telefono");
-                String correo = rs.getString("correo");
-                Usuario usuario = new Usuario(id_usuario, cedula, nombre, apellidos, telefono, correo, contraseniaInterna );
-                return usuario; 
-            }
-        } catch (SQLException ex) {
-            return null;
-        }
-        return null;
+        return ServiceUsuario.getINSTANCE().buscar(cedula);
+    }
+    
+    
+    public Transaccion buscar(int id){
+        return ServiceTransacciones.getINSTANCE().buscar(id);
         
     }
 }

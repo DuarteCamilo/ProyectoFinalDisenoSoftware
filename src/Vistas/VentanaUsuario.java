@@ -10,6 +10,11 @@ import Modelos.Transaccion;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.JTextField;
+import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -34,6 +39,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
         txtCorreo.setText(usuario.getCorreo());
         txtContrasena.setText(usuario.getContrasena());
         txtCedula.setEditable(false);
+        desahabiltarControl_v();
         
     }
 
@@ -625,10 +631,8 @@ public class VentanaUsuario extends javax.swing.JFrame {
         if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
         } else if (txtNombre.getText().length() >= 250 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
@@ -636,11 +640,9 @@ public class VentanaUsuario extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ' && c != KeyEvent.VK_BACK_SPACE) {
             getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo letras "); 
+            evt.consume(); 
         } else if (txtApellidos.getText().length() >= 250 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 250 caracteres permitidos");
         }
     }//GEN-LAST:event_txtApellidosKeyTyped
 
@@ -649,10 +651,8 @@ public class VentanaUsuario extends javax.swing.JFrame {
         if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
         }else if (txtTelefono.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 10 caracteres permitidos");
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
@@ -661,10 +661,8 @@ public class VentanaUsuario extends javax.swing.JFrame {
         if ( c == ' ') {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, " sin espacios"); 
         } else if (txtCorreo.getText().length() >= 300) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 300 caracteres permitidos");
         }
     }//GEN-LAST:event_txtCorreoKeyTyped
 
@@ -672,11 +670,9 @@ public class VentanaUsuario extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         if ( c == ' ') {
             getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, " sin espacios"); 
+            evt.consume(); 
         } else if (txtContrasena.getText().length() >= 50) {
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Máximo 50 caracteres permitidos");
         }
     }//GEN-LAST:event_txtContrasenaKeyTyped
 
@@ -705,7 +701,13 @@ public class VentanaUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVentanaHistorial1MouseClicked
 
-
+    private void desahabiltarControl_v() {
+        for (JTextField textField : Arrays.asList(txtNombre, txtCedula, txtTelefono ,txtApellidos ,txtContrasena ,txtCorreo)) {
+            ActionMap map = textField.getActionMap();
+            Action action = map.get(DefaultEditorKit.pasteAction);
+            action.setEnabled(false);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnActualizar;

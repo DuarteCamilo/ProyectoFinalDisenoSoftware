@@ -41,4 +41,9 @@ public class ControladorVentanaGestionCategoria {
     public ArrayList traerCategorias() throws SQLException{
         return ServiceCategoriaLibros.getINSTANCE().getAll();
     }  
+    
+    public Categoria buscarCategoria ( int id_categoria ){
+        return ServiceCategoriaLibros.getINSTANCE().buscar(id_categoria);
+    }
+    
 }

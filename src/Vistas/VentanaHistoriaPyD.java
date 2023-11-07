@@ -13,8 +13,14 @@ import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultEditorKit;
 /**
  *
  * @author cduar
@@ -35,6 +41,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         txtid.setEditable(false);
         txtid.setText(String.valueOf(usuario.getCedula()));
         btBuscar.setEnabled(false);
+        desahabiltarControl_v();
     }
 
     /**
@@ -54,10 +61,16 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cboFiltro2 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtid = new javax.swing.JTextField();
-        btBuscar = new javax.swing.JButton();
         btImprimir = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        btFiltrar = new javax.swing.JButton();
+        btBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,7 +117,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             tablaHistorial.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 710, 300));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 730, 330));
 
         btVolver.setBackground(new java.awt.Color(127, 85, 57));
         btVolver.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -116,7 +129,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 btVolverActionPerformed(evt);
             }
         });
-        jPanel1.add(btVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, 30));
+        jPanel1.add(btVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, -1, 30));
 
         cboFiltro.setBackground(new java.awt.Color(127, 85, 57));
         cboFiltro.setForeground(new java.awt.Color(255, 255, 255));
@@ -126,12 +139,12 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 cboFiltroActionPerformed(evt);
             }
         });
-        jPanel1.add(cboFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 60, 129, -1));
+        jPanel1.add(cboFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 110, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 85, 57));
         jLabel1.setText("Filtro Usuario:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
 
         cboFiltro2.setBackground(new java.awt.Color(127, 85, 57));
         cboFiltro2.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,17 +154,12 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 cboFiltro2ActionPerformed(evt);
             }
         });
-        jPanel1.add(cboFiltro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 129, -1));
+        jPanel1.add(cboFiltro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 110, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(127, 85, 57));
         jLabel2.setText("Cedula:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(127, 85, 57));
-        jLabel3.setText("Filtro Estado:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
 
         txtid.setBackground(new java.awt.Color(255, 255, 255));
         txtid.setForeground(new java.awt.Color(127, 85, 57));
@@ -161,19 +169,7 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 txtidKeyTyped(evt);
             }
         });
-        jPanel1.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 130, 30));
-
-        btBuscar.setBackground(new java.awt.Color(127, 85, 57));
-        btBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btBuscar.setText("Buscar");
-        btBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBuscarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, 30));
+        jPanel1.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 90, -1));
 
         btImprimir.setBackground(new java.awt.Color(127, 85, 57));
         btImprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -185,19 +181,94 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
                 btImprimirActionPerformed(evt);
             }
         });
-        jPanel1.add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, -1, 30));
+        jPanel1.add(btImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 460, -1, 30));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel5.setText("Filtro Estado:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel3.setText("Desde:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(127, 85, 57));
+        jLabel4.setText("Hasta:");
+
+        btFiltrar.setBackground(new java.awt.Color(127, 85, 57));
+        btFiltrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btFiltrar.setForeground(new java.awt.Color(255, 255, 255));
+        btFiltrar.setText("Buscar");
+        btFiltrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFiltrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(btFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(4, 4, 4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btFiltrar)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 280, 100));
+
+        btBuscar.setBackground(new java.awt.Color(127, 85, 57));
+        btBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btBuscar.setText("Buscar");
+        btBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 70, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -257,15 +328,18 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         if(selectedItem.toString().equals("Personal")){
             actualizarTabla(usuario.getCedula());
             txtid.setText(String.valueOf(usuario.getCedula()));
+            cboFiltro.setSelectedIndex(0);
         }else if(selectedItem.toString().equals("General")){
             actualizarTablaGeneral();
             txtid.setEditable(false);
             txtid.setText("0");
             btBuscar.setEnabled(false);
+            cboFiltro.setSelectedIndex(0);
         }else if(selectedItem.toString().equals("Otro Usuario")){
             txtid.setEditable(true);
             txtid.setText("");
-            btBuscar.setEnabled(true);    
+            btBuscar.setEnabled(true);
+            cboFiltro.setSelectedIndex(0);
         }
     }//GEN-LAST:event_cboFiltro2ActionPerformed
 
@@ -295,10 +369,8 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         if (Character.isLetter(c) || Character.isWhitespace(c) || (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE )) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingresar solo numeros"); 
         }else if (txtid.getText().length() >= 10 && c != KeyEvent.VK_BACK_SPACE) {
-            evt.consume();
-            
+            evt.consume();            
         }
     }//GEN-LAST:event_txtidKeyTyped
 
@@ -327,6 +399,113 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
         controlador.agregarTransaccion(transaccion);  
     
     }//GEN-LAST:event_btImprimirActionPerformed
+
+    private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
+        Object selectedItem = cboFiltro.getSelectedItem();
+        
+        if(selectedItem.toString().equals("-Seleccionar-") || selectedItem.toString().equals("Vencimiento") ){
+            JOptionPane.showMessageDialog( null , " Debe escoger preStamo o devolución(Entregado) para filtrar por las fechas");
+            return;
+        }
+        
+        if(jDateChooser1.getDate() == null  || jDateChooser2.getDate() == null ){
+            JOptionPane.showMessageDialog( null , " Debe escoger dos fechas para realizar el filtro correctamente");
+                
+        }else{
+            if(selectedItem.toString().equals("En Prestamo")){
+                if (modelo.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(rootPane, "No hay datos en la tabla para filtar por fecha ");
+                    return;
+                }
+                ArrayList<ArrayList<String>> ContenidoTabla = new ArrayList<>();
+
+                for (int i = 0; i < modelo.getRowCount(); i++) {
+                    ArrayList<String> fila = new ArrayList<>();
+
+                    for (int j = 0; j < modelo.getColumnCount(); j++) {
+                        fila.add(modelo.getValueAt(i, j).toString());
+                    }
+
+                    ContenidoTabla.add(fila);
+                }
+                
+                ArrayList<ArrayList<String>> FilasFiltradas = new ArrayList<>();
+                for (ArrayList<String> fila : ContenidoTabla) {
+                    String fechaStr = fila.get(4);
+                    LocalDate fecha = LocalDate.parse(fechaStr);
+                    
+                    Date x = jDateChooser1.getDate();
+                    Date y = jDateChooser2.getDate();
+                    LocalDate fechaInicio = new  java.sql.Date(x.getTime()).toLocalDate();
+                    LocalDate fechaFin = new  java.sql.Date(y.getTime()).toLocalDate();
+                   
+                    if (fecha.isAfter(fechaInicio) && fecha.isBefore(fechaFin)) {
+                        FilasFiltradas.add(fila);
+                    }            
+                    if( fecha.equals(fechaFin) ){
+                        FilasFiltradas.add(fila);
+                    }
+                    if(fecha.equals(fechaInicio)  ){
+                        FilasFiltradas.add(fila);
+                    }
+                }
+
+                boorarTabla();
+
+                for (ArrayList<String> fila : FilasFiltradas) {
+                    modelo.addRow(fila.toArray(new String[0]));
+                }
+                
+            } else if(selectedItem.toString().equals("Entregado")){
+                if (modelo.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(rootPane, "No hay datos en la tabla para filtar por fecha ");
+                    return;
+                }
+                ArrayList<ArrayList<String>> ContenidoTabla = new ArrayList<>();
+
+                for (int i = 0; i < modelo.getRowCount(); i++) {
+                    ArrayList<String> fila = new ArrayList<>();
+
+                    for (int j = 0; j < modelo.getColumnCount(); j++) {
+                        fila.add(modelo.getValueAt(i, j).toString());
+                    }
+
+                    ContenidoTabla.add(fila);
+                }
+                
+                ArrayList<ArrayList<String>> FilasFiltradas = new ArrayList<>();
+                for (ArrayList<String> fila : ContenidoTabla) {
+                    String fechaStr = fila.get(6);
+                    LocalDate fecha = LocalDate.parse(fechaStr);
+                    
+                    Date x = jDateChooser1.getDate();
+                    Date y = jDateChooser2.getDate();
+                    LocalDate fechaInicio = new  java.sql.Date(x.getTime()).toLocalDate();
+                    LocalDate fechaFin = new  java.sql.Date(y.getTime()).toLocalDate();
+                    if (fecha.isAfter(fechaInicio) && fecha.isBefore(fechaFin)) {
+                        FilasFiltradas.add(fila);
+                    }            
+                    if( fecha.equals(fechaFin) ){
+                        FilasFiltradas.add(fila);
+                    }
+                    if(fecha.equals(fechaInicio)  ){
+                        FilasFiltradas.add(fila);
+                    }
+                    
+                }
+
+                boorarTabla();
+
+                for (ArrayList<String> fila : FilasFiltradas) {
+                    modelo.addRow(fila.toArray(new String[0]));
+                }
+            }else{
+               
+                
+            }
+            
+        }
+    }//GEN-LAST:event_btFiltrarActionPerformed
 
  
     
@@ -553,18 +732,32 @@ public class VentanaHistoriaPyD extends javax.swing.JFrame {
             }
     }
     
+    private void desahabiltarControl_v() {
+        for (JTextField textField : Arrays.asList(txtid)) {
+            ActionMap map = textField.getActionMap();
+            Action action = map.get(DefaultEditorKit.pasteAction);
+            action.setEnabled(false);
+        }
+    }
+    
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
+    private javax.swing.JButton btFiltrar;
     private javax.swing.JButton btImprimir;
     private javax.swing.JButton btVolver;
     private javax.swing.JComboBox<String> cboFiltro;
     private javax.swing.JComboBox<String> cboFiltro2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaHistorial;
     private javax.swing.JTextField txtid;

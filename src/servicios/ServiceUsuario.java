@@ -73,13 +73,22 @@ public class ServiceUsuario implements DAO {
         }   
     }
     
-    public static ResultSet buscar_verificar_Correo(String correo){
+    public  Usuario buscar_verificar_Correo(String correo){
          try{
             sql = "SELECT * FROM usuarios WHERE correo = ?";            
             ps = conn.prepareStatement(sql);            
             ps.setString(1, correo);
             rs = ps.executeQuery();
-            return rs;
+            if(rs.next()){
+                int cedula = rs.getInt("cedula");
+                String contraseniaInterna = rs.getString("contrasena");
+                String nombre = rs.getString("nombre");
+                String apellidos = rs.getString("apellido");
+                int id_usuario = rs.getInt("id_usuario");
+                String telefono = rs.getString("telefono");
+                Usuario usuario = new Usuario(id_usuario, cedula, nombre, apellidos, telefono, correo, contraseniaInterna );
+                return usuario; 
+            }
         
         }catch( SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -123,14 +132,14 @@ public class ServiceUsuario implements DAO {
             String correo = usaurio.getCorreo();
             String contrasena = usaurio.getContrasena();
             
-            ResultSet rs1 = buscar(cedula);
-            ResultSet rs2 = buscar_verificar_Correo(correo);
+            Usuario rs1 = buscar(cedula);
+            Usuario rs2 = buscar_verificar_Correo(correo);
  
-            if (rs1.next()   ) {
+            if (rs1 != null   ) {
                 JOptionPane.showMessageDialog(null, "El usuario con el numero de cedula " + cedula + " ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            if (rs2.next()) {
+            if (rs2  != null) {
                 JOptionPane.showMessageDialog(null, "El usuario con el correo " + correo + " ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);                    
                  return false;                   
             } 
@@ -158,9 +167,9 @@ public class ServiceUsuario implements DAO {
     public boolean eliminar(Object insertion) {
         try{
             int cedula = (int)insertion;
-            rs = buscar(cedula);
+            Usuario usuario = buscar(cedula);
 
-            if(rs.next()){
+            if(usuario != null){
                 sql = "DELETE from usuarios where cedula=?;";
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, cedula );
@@ -193,12 +202,12 @@ public class ServiceUsuario implements DAO {
             String correo = usaurio.getCorreo();
             String contrasena = usaurio.getContrasena();
 
-            ResultSet rs1 = buscar_verificar_Correo(correo);
-            ResultSet rs2 = buscar(cedula);
+            Usuario rs1 = buscar_verificar_Correo(correo);
+            Usuario rs2 = buscar(cedula);
             
-            if(rs1.next()){
-                if(rs2.next()){
-                    if( rs2.getString("correo").equals(correo) ){
+            if(rs1 != null){
+                if(rs2!= null){
+                    if( rs2.getCorreo().equals(correo) ){
                         String sql = "UPDATE usuarios set nombre=?,apellido=?,telefono=?,contrasena=? where cedula=?;";
                         ps = conn.prepareStatement(sql);
                         ps.setString(1, nombre);
@@ -238,18 +247,26 @@ public class ServiceUsuario implements DAO {
     }
 
     @Override
-    public ResultSet buscar(Object insertion) {
-        
+    public Usuario buscar(Object insertion) {
         try{
             int cedula = (int)insertion;
             sql = "SELECT * FROM usuarios WHERE cedula = ?";            
             ps = conn.prepareStatement(sql);            
             ps.setInt(1, cedula);
-            rs = ps.executeQuery();
-            return rs;
-        
+            rs = ps.executeQuery(); 
+            if(rs.next()){
+                String contraseniaInterna = rs.getString("contrasena");
+                String nombre = rs.getString("nombre");
+                String apellidos = rs.getString("apellido");
+                int id_usuario = rs.getInt("id_usuario");
+                String telefono = rs.getString("telefono");
+                String correo = rs.getString("correo");
+                Usuario usuario = new Usuario(id_usuario, cedula, nombre, apellidos, telefono, correo, contraseniaInterna );
+                return usuario; 
+            }
         }catch( SQLException ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
         } 
         return null;
     } 

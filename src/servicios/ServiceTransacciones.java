@@ -101,48 +101,32 @@ public class ServiceTransacciones implements DAO{
     }
 
     @Override
-    public ResultSet buscar(Object insertion) {
-//        try {
-//            int id_usaurio = (int)insertion;
-//            sql = "SELECT * FROM transacciones WHERE id_usuario=? ; ";
-//            ps = conn.prepareStatement(sql);
-//            ps.setInt(1, id_usaurio);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                String detalles = rs.getString("detalles");
-//                int id_usuario = rs.getInt("id_usuario");
-//                String fechaString = rs.getString("fecha");
-//                String horaString = rs.getString("hora");
-//                LocalDate fecha = LocalDate.parse(fechaString);
-//                LocalTime hora = LocalTime.parse(horaString);
-//                Transaccion aux = new Transaccion(accion, fecha, hora, detalles, id_usuario);
-//                listaTransacciones.add(aux);
-//            }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+    public Transaccion buscar(Object insertion) {
+        try {
+            int id = (int)insertion;
+            sql = "SELECT * FROM transacciones WHERE id=?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String accion = rs.getString("accion");
+                String detalles = rs.getString("detalles");
+                int id_usuario = rs.getInt("id_usuario");
+                String fechaString = rs.getString("fecha");
+                String horaString = rs.getString("hora");
+                LocalDate fecha = LocalDate.parse(fechaString);
+                LocalTime hora = LocalTime.parse(horaString);
+                Transaccion transaccion = new Transaccion(id, accion, fecha, hora, detalles, id_usuario);
+                ps.close();
+                return transaccion;
+   
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
         return null;
-//        try {
-//            int id_usaurio = (int)insertion;
-//            sql = "SELECT * FROM transacciones WHERE id_usuario=? ; ";
-//            ps = conn.prepareStatement(sql);
-//            ps.setInt(1, id_usaurio);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                String detalles = rs.getString("detalles");
-//                int id_usuario = rs.getInt("id_usuario");
-//                String fechaString = rs.getString("fecha");
-//                String horaString = rs.getString("hora");
-//                LocalDate fecha = LocalDate.parse(fechaString);
-//                LocalTime hora = LocalTime.parse(horaString);
-//                Transaccion aux = new Transaccion(accion, fecha, hora, detalles, id_usuario);
-//                listaTransacciones.add(aux);
-//            }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+
     }
     
     
